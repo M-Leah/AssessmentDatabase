@@ -4,8 +4,6 @@
 * @author Michael Leah
 */
 
-require_once '../models/DAO/TeacherDAO.php';
-
 class Controller 
 {
     protected function model($model)

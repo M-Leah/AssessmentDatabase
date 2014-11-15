@@ -7,10 +7,8 @@ class Home extends Controller
 {
     public function index()
     {
-       $Teacher = $this->model('Teacher');
        $this->view('home/index', []);
-       
-       $teacher = TeacherDAO::getID(1);
+             
     }
     
     
