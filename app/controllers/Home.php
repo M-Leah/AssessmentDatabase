@@ -3,12 +3,14 @@
 * Final Year Project - Assessment Database
 * @author Michael Leah
 */
-
 class Home extends Controller
 {
-    public function index($profileID = '')
+    public function index()
     {
-       echo 'Test Method: ' . $profileID;
+       $Teacher = $this->model('Teacher');
+       $this->view('home/index', []);
+       
+       $teacher = TeacherDAO::getID(1);
     }
     
     
