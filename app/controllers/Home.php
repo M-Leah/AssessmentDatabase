@@ -5,9 +5,16 @@
 */
 class Home extends Controller
 {
-    public function index()
+    public function index($param = '', $param2 = '')
     {
-       $this->view('home/index', []);
+        $user = $this->model('User');
+        $user->name = $param;
+        $user->age = $param2;
+
+        $this->view('home/index', [
+            'name' => $user->name,
+            'age' => $user->age
+        ]);
              
     }
     
