@@ -1,8 +1,12 @@
 Viewing -> Home/Index
-<br>
+<br><br>
 
+
+Your Details are: <br>
 <?php
-
+   foreach ($data as $content) {
+       echo $content . '<br>';
+   }
 ?>
 
 <br>

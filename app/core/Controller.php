@@ -9,7 +9,7 @@ class Controller {
     protected function model($model)
     {
         // REQUIRES FILE CHECK
-        require_once '../app/models/DAO/' . $model . '.php';
+        require_once '../app/models/' . $model . '.php';
         return new $model();
     }
     

@@ -5,6 +5,8 @@
  * Created on: 19/11/2014
  */
 
+require '../app/core/Database.php';
+
 class User {
     protected $id;
     protected $username;
@@ -28,8 +30,39 @@ class User {
         return $userInstance;
     }
 
+
+
+
     /**
-     * Getters/Setters for the User Class
+     * Return a user object from the database if they exist
+     * @param $id
+     * @return null|User
+     */
+    public static function get($id){
+
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM User WHERE user_id = :id");
+        $statement->bindParam(":id", $id);
+
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+
+        if(sizeof($result) > 0)
+        {
+            return User::fromDatabase($result[0]);
+        }
+
+        return null;
+    }
+
+
+
+
+
+    /**
+     * Getters/Setters for the individual User Class aspects
      */
     public function setId($id) {
         $this->id = $id;

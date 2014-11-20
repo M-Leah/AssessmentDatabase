@@ -5,15 +5,29 @@
 */
 class Home extends Controller
 {
-    public function index($param = '', $param2 = '')
+    /**
+     *
+     */
+    public function index()
     {
-        $user = $this->model('UserDAO')->get(1);
+        $model = $this->model('User');
+        $user = $model->get(1);
+
+        $id = $user->getId();
+        $name =  $user->getUsername();
+        $password = $user->getPassword();
+        $email = $user->getEmail();
 
 
 
+        $this->view('home/index', [
+            'id' => $id,
+            'name' => $name,
+            'password' => $password,
+            'email' => $email
 
 
-        $this->view('home/index', []);
+        ]);
 
     }
 
