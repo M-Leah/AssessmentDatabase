@@ -7,4 +7,13 @@
 
 ?>
 
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+
+    </body>
+</html>
 View -> Login / Index

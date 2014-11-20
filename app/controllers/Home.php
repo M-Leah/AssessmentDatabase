@@ -7,17 +7,16 @@ class Home extends Controller
 {
     public function index($param = '', $param2 = '')
     {
-        $user = $this->model('User');
-        $user->name = $param;
-        $user->age = $param2;
+        $user = $this->model('UserDAO')->get(1);
 
-        $this->view('home/index', [
-            'name' => $user->name,
-            'age' => $user->age
-        ]);
-             
+
+
+
+
+        $this->view('home/index', []);
+
     }
-    
-    
-    
+
+
+
 }
