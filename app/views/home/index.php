@@ -1,13 +1,10 @@
-Viewing -> Home/Index
-<br><br>
-
-
-Your Details are: <br>
-<?php
-   foreach ($data as $content) {
-       echo $content . '<br>';
-   }
-?>
-
+Home / Index View.
 <br>
+
 <a href="<?php echo '/AssessmentDatabase/public/login/'; ?>">Login!</a>
+
+
+
+
+
+

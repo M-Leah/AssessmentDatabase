@@ -1,0 +1,22 @@
+body {
+    font-family: Arial;
+    margin: 0;
+}
+
+h1 {
+    background: #de1b3d;
+    padding: 20px;
+    font-size: 1.2em;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+#content {
+    padding: 0 20px;
+    text-align: center;
+}
+
+input {
+    border-radius: 2px;
+}
+
