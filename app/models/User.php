@@ -57,6 +57,35 @@ class User {
         return null;
     }
 
+    /**
+     * @param $username
+     * @param $password
+     * @return null|User
+     */
+    public static function getByCredentials($username, $password){
+
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM User WHERE username = :username;");
+        $statement->bindParam(":username", $username);
+        $statement->execute();
+
+        $result = $statement->fetchAll();
+        if(sizeof($result) > 0)
+        {
+            $user = User::fromDatabase($result[0]);
+            $user_password = $user->getPassword();
+            if (password_verify($password, $user_password)) {
+                return $user;
+            }
+
+            return null;
+        }
+
+        return null;
+
+    }
+
 
 
 

@@ -19,7 +19,12 @@
 
 
     <div id="content">
-        <form action="login.php" method="POST">
+
+        <div id="error_message">
+            <?= $data['error']; ?>
+        </div>
+
+        <form action="" method="POST">
             <input type="text" placeholder="Username" name="username"><br><br>
             <input type="password" placeholder="Password" name="password"><br><br>
             <input type="submit" value="Login">

@@ -16,6 +16,10 @@ h1 {
     text-align: center;
 }
 
+#error_message {
+    padding: 10px;
+}
+
 input {
     border-radius: 2px;
 }
