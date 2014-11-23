@@ -37,7 +37,7 @@ class Login extends Controller
                     header('Location: /AssessmentDatabase/public/home/');
 
                 } else {
-                    $error = 'Username or Password were entered incorrectly.';
+                    $error = 'Incorrect details, please try again.';
                 }
 
 

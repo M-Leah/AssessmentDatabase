@@ -11,25 +11,37 @@
 <html>
     <head>
         <link rel="stylesheet" href="../../public/css/header.css">
+        <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap.min.css">
     </head>
     <body>
 
 
-        <h1>Login!</h1>
+        <h1 class="main_title">Assessment Database</h1>
 
 
-    <div id="content">
+    <div class="content center-block">
 
-        <div id="error_message">
+        <div class="alert-warning">
             <?= $data['error']; ?>
         </div>
 
+        <div class="form_title">Login</div>
         <form action="" method="POST">
-            <input type="text" placeholder="Username" name="username"><br><br>
-            <input type="password" placeholder="Password" name="password"><br><br>
-            <input type="submit" value="Login">
+            <div class="form-group">
+                <label for="inputUsername">Username</label>
+                <input type="text" class="form-control" name="username">
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" name="password">
+            </div>
+            <input type="submit" class="btn btn-primary pull-right" value="Login">
         </form>
+
      </div>
 
+    <footer class="navbar-fixed-bottom">
+        <div class="panel-footer">(C) Copyright Michael Leah 2014</div>
+    </footer>
     </body>
 </html>
