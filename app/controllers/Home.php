@@ -13,9 +13,6 @@ class Home extends Controller
         $model = $this->model('User');
 
         Session::handleLogin();
-        echo Session::get('user_logged_in');
-
-
 
         $this->view('home/index', []);
 
@@ -23,10 +20,10 @@ class Home extends Controller
 
     public function logout()
     {
-        $model = $this->model('User');
+        Session::startSession();
         Session::destroy();
 
-        header('Location: /AssessmentDatabase/public/login/index');
+        header('Location: /AssessmentDatabase/public/login/');
         exit();
     }
 
