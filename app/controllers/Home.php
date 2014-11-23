@@ -11,24 +11,23 @@ class Home extends Controller
     public function index()
     {
         $model = $this->model('User');
-        $user = $model->get(1);
 
-        $id = $user->getId();
-        $name =  $user->getUsername();
-        $password = $user->getPassword();
-        $email = $user->getEmail();
+        Session::handleLogin();
+        echo Session::get('user_logged_in');
 
 
 
-        $this->view('home/index', [
-            'id' => $id,
-            'name' => $name,
-            'password' => $password,
-            'email' => $email
+        $this->view('home/index', []);
 
+    }
 
-        ]);
+    public function logout()
+    {
+        $model = $this->model('User');
+        Session::destroy();
 
+        header('Location: /AssessmentDatabase/public/login/index');
+        exit();
     }
 
 

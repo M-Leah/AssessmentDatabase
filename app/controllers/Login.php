@@ -22,10 +22,22 @@ class Login extends Controller
 
                 $user = $model->getByCredentials($username, $password);
 
+
                 if ($user != null) {
 
-                    // Need to create cookie to handle login.
+                    /* Create a session for the logged in user */
+                    Session::startSession();
+
+                    Session::set('user_logged_in', true);
+                    Session::set('user_id', $user->getId());
+                    Session::set('username', $user->getUsername());
+                    Session::set('user_email', $user->getEmail());
+
+                    echo Session::get('user_logged_in'); // debug
+
+                    /* Relocate User to the home page */
                     header('Location: /AssessmentDatabase/public/home/');
+
                 } else {
                     $error = 'Username or Password were entered incorrectly.';
                 }

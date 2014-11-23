@@ -4,6 +4,8 @@
 * @author Michael Leah
 */
 
+require 'Session.php';
+
 class Controller {
 
     protected function model($model)
