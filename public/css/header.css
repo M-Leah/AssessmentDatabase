@@ -1,5 +1,4 @@
 body {
-    font-family: Arial;
     margin: 0;
 }
 
@@ -9,6 +8,7 @@ body {
 }
 
 .main_title {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
     background-color: cadetblue;
     color: #ffffff;

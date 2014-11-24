@@ -12,6 +12,7 @@
     <head>
         <link rel="stylesheet" href="../../public/css/header.css">
         <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap-theme.min.css">
     </head>
     <body>
 
@@ -35,6 +36,7 @@
                 <label for="inputPassword">Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
+            <div class="pull-left">Forgotten your <a href="/assessmentdatabase/public/login/recover/username/">Username</a> or <a href="/assessmentdatabase/public/login/recover/password/">Password</a>?</div>
             <input type="submit" class="btn btn-primary pull-right" value="Login">
         </form>
 

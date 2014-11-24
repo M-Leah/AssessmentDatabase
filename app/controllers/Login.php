@@ -50,4 +50,18 @@ class Login extends Controller
             'error' => $error
         ]);
     }
+
+    public function recover($param = '')
+    {
+        $mode = $param;
+        if ($mode == 'username') {
+            // Handle username recovery
+        }
+        elseif ($mode == 'password') {
+            // Handle password recovery
+        } else {
+            header('Location: /AssessmentDatabase/public/home');
+        }
+        $this->view('login/recovery', []);
+    }
 }
