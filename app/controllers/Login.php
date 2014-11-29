@@ -126,14 +126,15 @@ class Login extends Controller
 
 
 
-        if (isset($_POST['email']) && isset($_POST['password']) && isset($POST['confirm_password']) && isset($_POST['hash'])) {
+        if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['hash'])) {
+
             if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirm_password']) && !empty($_POST['hash'])) {
                 $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
                 $password = $_POST['password'];
-                $confirmPassword = $_POST['confirmPassword'];
+                $confirmPassword = $_POST['confirm_password'];
                 $hash = $_POST['hash'];
 
-                echo 'test';
+
 
                 if ($password == $confirmPassword) {
                     // Passwords match
@@ -141,18 +142,19 @@ class Login extends Controller
                     if ($user = $model->getByEmail($email)) {
                         $dbHash = $model->getRecoveryHash($user->getId());
 
-                        echo 'it is hitting here passwords match';
 
                         if ($hash == $dbHash) {
                             // Hashes Match
                             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-                            echo 'it is hitting here hashes match';
+
 
 
                             if ($model->updatePassword($user->getId(), $passwordHash)) {
                                 // User password updated.
                                 $message = 'Your details have now been changed';
-                                echo 'it is hitting here';
+
+                                // Remove hash from database now that the password has been changed.
+
                             }
 
                         } else {
@@ -173,7 +175,7 @@ class Login extends Controller
 
         $this->view('login/hash', [
             'error' => $error,
-            $message => $message
+            'message' => $message
         ]);
     }
 }

@@ -19,6 +19,13 @@
 
 <div class="content center-block">
 
+    <div class="alert-warning">
+        <?= $data['error']; ?>
+    </div>
+
+    <div class="alert-success">
+        <?= $data['message']; ?>
+    </div>
 
     <form action="" method="POST">
         <div class="form-group">
