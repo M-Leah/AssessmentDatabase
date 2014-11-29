@@ -18,6 +18,18 @@
     <h1 class="main_title">Recovery Form</h1>
 
     <div class="content center-block">
+
+
+        <div class="alert-warning">
+            <?= $data['error']; ?>
+        </div>
+
+        <div class="alert-success">
+            <?= $data['message']; ?>
+        </div>
+
+
+
         <form action="" method="POST">
             <div class="form-group">
                 <label for="inputEmail">Email</label><br>
@@ -26,9 +38,10 @@
             <input type="submit" class="btn btn-primary pull-right" value="Send Email">
         </form>
 
-        Return to the <a href="/assessmentdatabase/public/login/">login in</a> page.
+        Return to the <a href="/assessmentdatabase/public/login/">login</a> page.
 
     </div>
+
 
 
 

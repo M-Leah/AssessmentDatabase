@@ -7,8 +7,13 @@
 
 class Mail {
 
-    public static function sendMail()
+    /**
+     * @param $to
+     * @param $subject
+     * @param $message
+     */
+    public static function sendMail($to, $subject, $message)
     {
-
+        mail($to, $subject, $message);
     }
 }
