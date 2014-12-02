@@ -87,13 +87,15 @@ class Login extends Controller
                 if ($user = $model->getByEmail($email)) {
 
                     /* Check if there is already a previous hash */
-                    if ($hash = $model->getRecoveryHash($user->getId())) {
+                    if ($hash = Hash::getRecoveryHash($user->getId())) {
                         // Hash has already been set.
                         Mail::sendMail($email, 'Recover Password', 'You requested a password recovery, please enter the below hash on the recovery page. /n/n Your unique hash is: /n/n' . $hash);
                         header('Location: /AssessmentDatabase/public/login/hash/');
                     } else {
                         // Hash has not yet been set.
-                        $hash = $model->setRecoveryHash($email);
+                        $hash = Hash::setRecoveryHash($email);
+                        Mail::sendMail($email, 'Recover Password', 'You requested a password recovery, please enter the below hash on the recovery page. /n/n Your unique hash is: /n/n' . $hash);
+                        header('Location: /AssessmentDatabase/public/login/hash/');
 
                     }
 
@@ -140,7 +142,7 @@ class Login extends Controller
                     // Passwords match
 
                     if ($user = $model->getByEmail($email)) {
-                        $dbHash = $model->getRecoveryHash($user->getId());
+                        $dbHash = Hash::getRecoveryHash($user->getId());
 
 
                         if ($hash == $dbHash) {
@@ -154,6 +156,8 @@ class Login extends Controller
                                 $message = 'Your details have now been changed';
 
                                 // Remove hash from database now that the password has been changed.
+                                Hash::deleteRecoveryHash($user->getId());
+
 
                             }
 
