@@ -20,6 +20,8 @@ class ClassManagement extends Controller
         Session::startSession();
         Session::handleLogin();
 
+        $model = $this->model('TeacherClass');
+
         if (isset($_FILES['file']['name']) && !empty($_FILES['file']['name'])) {
 
             $fileDetails = [
@@ -41,6 +43,14 @@ class ClassManagement extends Controller
                     // Read Data
                     // Upload to database
                     // unlink() file
+
+                    $model->insertCSV($location . $fileDetails['fileName']);
+
+
+
+
+
+
                 }
 
 
