@@ -13,7 +13,11 @@ class Home extends Controller
         $model = $this->model('User');
         Session::handleLogin();
 
-        $this->view('home/index', []);
+        $name = $_SESSION['username'];
+
+        $this->view('home/index', [
+            'name' => $name
+        ]);
 
     }
 

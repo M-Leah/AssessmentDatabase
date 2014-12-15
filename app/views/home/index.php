@@ -1,10 +1,35 @@
-Home / Index View.
-<br>
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../public/css/header.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap-theme.min.css">
+</head>
+<body>
 
 
-<a href="<?php echo '/AssessmentDatabase/public/home/logout'; ?>">Logout</a>
+<h1 class="main_title"><?= $data['name'] ?>'s Dashboard</h1>
 
-<br><br>
+
+<div class="center-block text-center">
+
+    <ul class="list-inline">
+        <li><a href="/AssessmentDatabase/public/profile/">Profile</a></li>
+        <li>/</li>
+        <li><a href="/AssessmentDatabase/public/ClassManagement/">Class Management</a></li>
+        <li>/</li>
+        <li><a href="#">Report Management</a></li>
+        <li>/</li>
+        <li></a> <a href="/AssessmentDatabase/public/home/logout/">Logout</a></li>
+    </ul>
+
+</div>
+
+<footer class="navbar-fixed-bottom">
+    <div class="panel-footer">(C) Copyright Michael Leah 2014</div>
+</footer>
+</body>
+</html>
 
 
 
