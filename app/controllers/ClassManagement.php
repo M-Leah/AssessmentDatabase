@@ -39,18 +39,9 @@ class ClassManagement extends Controller
                 $location = '../app/core/temp/';
                 if (move_uploaded_file($fileDetails['tmp_name'], $location . $fileDetails['fileName']))
                 {
-                    // File Moved to temp location
-                    // Read Data
-                    // Upload to database
-                    // unlink() file
-
-                    $model->insertCSV($location . $fileDetails['fileName']);
-
-
-
-
-
-
+                    /* insert the data from the CSV into the database, then delete the CSV file */
+                    $model->insertClassCSV($location . $fileDetails['fileName']);
+                    unlink($location . $fileDetails['fileName']);
                 }
 
 
