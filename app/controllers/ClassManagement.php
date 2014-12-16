@@ -22,7 +22,10 @@ class ClassManagement extends Controller
 
         $model = $this->model('TeacherClass');
 
-        if (isset($_FILES['file']['name']) && !empty($_FILES['file']['name'])) {
+        if (isset($_FILES['file']['name']) && !empty($_FILES['file']['name'])
+            && isset($_POST['class_name']) && !empty($_POST['class_name'])) {
+            $className = $_POST['class_name'];
+            $teacherName = $_SESSION['username'];
 
             $fileDetails = [
                 'fileName' => $_FILES['file']['name'],
@@ -40,7 +43,7 @@ class ClassManagement extends Controller
                 if (move_uploaded_file($fileDetails['tmp_name'], $location . $fileDetails['fileName']))
                 {
                     /* insert the data from the CSV into the database, then delete the CSV file */
-                    $model->insertClassCSV($location . $fileDetails['fileName']);
+                    $model->createClass($className, $teacherName, $location . $fileDetails['fileName']);
                     unlink($location . $fileDetails['fileName']);
                 }
 

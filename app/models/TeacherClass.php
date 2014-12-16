@@ -11,21 +11,16 @@ class TeacherClass {
     protected $class_name;
     protected $teacher_name;
 
-    /**
-     * @param $fileLocation
-     */
-    public function insertClassCSV($fileLocation)
+    public function createClass($className, $teacherName, $fileLocation)
     {
+        // Create Class in DB
         $db = Database::getInstance();
         $statement = $db->prepare("INSERT INTO teacherclass (class_name, teacher_name) VALUES (:class_name, :teacher_name);");
-
-        $handle = fopen($fileLocation, 'r');
-        while ($data = fgetcsv($handle))
+        $statement->bindParam(':class_name', $className);
+        $statement->bindParam(':teacher_name', $teacherName);
+        if ($statement->execute())
         {
-            $statement->bindParam(':class_name', $data[0]);
-            $statement->bindParam(':teacher_name', $data[1]);
-            $statement->execute();
-
+            self::insertStudentCSV($fileLocation);
         }
     }
 
@@ -34,7 +29,16 @@ class TeacherClass {
      */
     public function insertStudentCSV($fileLocation)
     {
+        $db = Database::getInstance();
+        $statement = $db->prepare("INSERT INTO student (student_name, class_name) VALUES (:student_name, :class_name);");
 
+        $handle = fopen($fileLocation, 'r');
+        while ($data = fgetcsv($handle))
+        {
+            $statement->bindParam(':student_name', $data[0]);
+            $statement->bindParam(':class_name', $data[1]);
+            $statement->execute();
+        }
     }
 
 
