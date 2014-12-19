@@ -12,7 +12,15 @@ class ClassManagement extends Controller
         Session::startSession();
         Session::handleLogin();
 
-        $this->view('classmanagement/index', []);
+        $model = $this->model('TeacherClass');
+
+        // Output all classes for this user
+       $teacherName = Session::get('username');
+       $classes =  $model->getClasses($teacherName);
+
+        $this->view('classmanagement/index', [
+            'classes' => $classes
+        ]);
     }
 
     public function create()
@@ -62,18 +70,34 @@ class ClassManagement extends Controller
         $this->view('classmanagement/create', []);
     }
 
-    public function edit($param = '')
-    {
-
-    }
-
     public function delete($param = '')
     {
+        Session::startSession();
+        Session::handleLogin();
 
+        $model = $this->model('TeacherClass');
+        $className = $param;
+
+        if ($model->deleteClass($className)) {
+            header('Location: /AssessmentDatabase/Public/ClassManagement/');
+            die();
+        }
+
+        $error = 'There was a problem deleting ' . $className . 'Please click <a href="/AssessmentDatabase/public/classmanagement">here</a> to try again';
+
+        $this->view('classmanagement/delete', [
+            'error' => $error
+        ]);
     }
 
-    public function mark($param = '')
+    public function view($param = '')
     {
+        Session::startSession();
+        Session::handleLogin();
 
+        $model = $this->model('TeacherClass');
+        $className = $param;
     }
+
+
 }

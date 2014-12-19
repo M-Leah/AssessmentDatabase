@@ -41,6 +41,40 @@ class TeacherClass {
         }
     }
 
+    public function getClasses($teacherName)
+    {
+        $db = Database::getInstance();
+        $statement = $db->prepare("SELECT * FROM teacherclass WHERE teacher_name = :teacher_name;");
+        $statement->bindParam(':teacher_name', $teacherName);
+        $statement->execute();
 
+        $result = $statement->fetchAll();
+        if (sizeof($result) > 0)
+        {
+            // Classes found
+            return $result;
+        }
+
+        return false;
+    }
+
+    public function deleteClass($className)
+    {
+        $db = Database::getInstance();
+        $statement = $db->prepare("DELETE FROM student WHERE class_name = :class_name;");
+        $statement->bindParam(':class_name', $className);
+        if ($statement->execute())
+        {
+            $statement = $db->prepare("DELETE FROM teacherclass WHERE class_name = :class_name;");
+            $statement->bindParam(':class_name', $className);
+            if ($statement->execute())
+            {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
 
 }
