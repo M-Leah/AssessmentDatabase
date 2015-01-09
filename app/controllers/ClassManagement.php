@@ -27,6 +27,7 @@ class ClassManagement extends Controller
     {
         Session::startSession();
         Session::handleLogin();
+        $error = '';
 
         $model = $this->model('TeacherClass');
 
@@ -57,17 +58,19 @@ class ClassManagement extends Controller
 
 
             } else {
-                echo 'Not CSV File';
+                $error =  'Not CSV File';
             }
 
         } else {
-            echo 'No File Uploaded';
+            $error = 'No File Uploaded';
         }
 
 
 
 
-        $this->view('classmanagement/create', []);
+        $this->view('classmanagement/create', [
+            'error' => $error
+        ]);
     }
 
     public function delete($param = '')
@@ -77,8 +80,9 @@ class ClassManagement extends Controller
 
         $model = $this->model('TeacherClass');
         $className = $param;
+        $teacherName = $_SESSION['username'];
 
-        if ($model->deleteClass($className)) {
+        if ($model->deleteClass($className, $teacherName)) {
             header('Location: /AssessmentDatabase/Public/ClassManagement/');
             die();
         }
@@ -90,6 +94,7 @@ class ClassManagement extends Controller
         ]);
     }
 
+    /* Causing issues with views being displayed
     public function view($param = '')
     {
         Session::startSession();
@@ -98,6 +103,6 @@ class ClassManagement extends Controller
         $model = $this->model('TeacherClass');
         $className = $param;
     }
-
+    */
 
 }
