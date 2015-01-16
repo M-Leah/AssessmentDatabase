@@ -11,6 +11,11 @@ class TeacherClass {
     protected $class_name;
     protected $teacher_name;
 
+    /**
+     * @param $className
+     * @param $teacherName
+     * @param $fileLocation
+     */
     public function createClass($className, $teacherName, $fileLocation)
     {
         // Create Class in DB
@@ -52,6 +57,10 @@ class TeacherClass {
         }
     }
 
+    /**
+     * @param $teacherName
+     * @return array|bool
+     */
     public function getClasses($teacherName)
     {
         $db = Database::getInstance();
@@ -69,6 +78,11 @@ class TeacherClass {
         return false;
     }
 
+    /**
+     * @param $className
+     * @param $teacherName
+     * @return bool
+     */
     public function deleteClass($className, $teacherName)
     {
         $db = Database::getInstance();
@@ -88,6 +102,29 @@ class TeacherClass {
 
         return false;
 
+    }
+
+    /**
+     * @param $className
+     * @param $teacherName
+     * @return array|bool
+     */
+    public function getStudents($className, $teacherName)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM student WHERE class_name = :class_name AND teacher_name = :teacher_name;");
+        $statement->bindParam(':class_name', $className);
+        $statement->bindParam(':teacher_name', $teacherName);
+        $statement->execute();
+
+        $results = $statement->fetchAll();
+        if (sizeof($results) > 0)
+        {
+            return $results;
+        }
+
+        return false;
     }
 
 }

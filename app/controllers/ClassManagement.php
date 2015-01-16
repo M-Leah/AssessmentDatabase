@@ -94,15 +94,24 @@ class ClassManagement extends Controller
         ]);
     }
 
-    /* Causing issues with views being displayed
-    public function view($param = '')
+
+    public function inspect($param = '')
     {
         Session::startSession();
         Session::handleLogin();
 
         $model = $this->model('TeacherClass');
         $className = $param;
+        $teacherName = $_SESSION['username'];
+
+        $students = $model->getStudents($className, $teacherName);
+
+
+        $this->view('classmanagement/inspect', [
+            'students' => $students,
+            'className' => $className,
+            'teacherName' => $teacherName
+        ]);
     }
-    */
 
 }

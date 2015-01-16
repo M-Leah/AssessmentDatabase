@@ -13,9 +13,8 @@
             <tr>
                 <td>Class ID</td>
                 <td>Data Class Name</td>
-                <td>View</td>
+                <td>Inspect</td>
                 <td>Mark</td>
-                <td>Edit</td>
                 <td>Delete</td>
             </tr>
             <?php
@@ -24,10 +23,9 @@
                         echo '<tr>';
                         echo '<td>' . $class[0] . '</td>';
                         echo '<td>' . $class[1] . '</td>';
-                        echo '<td> ViewIcon </td>';
+                        echo '<td> <a href="' . '/AssessmentDatabase/public/ClassManagement/inspect/' . $class[1] . '/">InspectIcon</a></td>';
                         echo '<td> MarkIcon </td>';
-                        echo '<td> EditIcon </td>';
-                        echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/delete/' . $class[1] . '/">DELETEICON</td>';
+                        echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/delete/' . $class[1] . '/">DELETEICON</a></td>';
                         echo '</tr>';
                     }
                 }
