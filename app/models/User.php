@@ -5,9 +5,6 @@
  * Created on: 19/11/2014
  */
 
-require '../app/core/Database.php';
-require '../app/core/Hash.php';
-
 class User {
     protected $id;
     protected $username;

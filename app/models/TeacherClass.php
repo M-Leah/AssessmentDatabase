@@ -4,7 +4,6 @@
  * Created by: Michael Leah (L1048345)
  * Created on: 15/12/2014
  */
-require '../app/core/Database.php';
 
 class TeacherClass {
     protected $class_id;
