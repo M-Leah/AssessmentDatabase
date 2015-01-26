@@ -127,4 +127,75 @@ class TeacherClass {
         return false;
     }
 
+    /**
+     * Edit the student name, utilising the teacher name to prevent edit affecting classes the teacher does not control.
+     * @param $studentID
+     * @param $newName
+     * @param $teacherName
+     * @return bool
+     */
+    public function editStudentName($studentID, $newName, $teacherName)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("UPDATE student SET student_name = :studentName WHERE student_id = :studentID
+                                    AND teacher_name = :teacherName;");
+        $statement->bindParam(':studentName', $newName);
+        $statement->bindParam(':studentID', $studentID);
+        $statement->bindParam(':teacherName', $teacherName);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Deletes a student from the database, utilises the teacher name to prevent a teacher deleting other instances
+     * of the student from other classes.
+     * @param $studentID
+     * @param $teacherName
+     * @return bool
+     */
+    public function deleteStudent($studentID, $teacherName)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("DELETE FROM student WHERE student_id = :studentID
+                                    AND teacher_name = :teacherName;");
+        $statement->bindParam(':studentID', $studentID);
+        $statement->bindParam(':teacherName', $teacherName);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Inserts a student record into the database
+     * @param $studentName
+     * @param $class
+     * @param $teacherName
+     * @return bool
+     */
+    public function addStudent($studentName, $class, $teacherName)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("INSERT INTO student (student_name, class_name, teacher_name)
+                                    VALUES (:studentName, :className, :teacherName);");
+        $statement->bindParam(':studentName', $studentName);
+        $statement->bindParam(':className', $class);
+        $statement->bindParam(':teacherName', $teacherName);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

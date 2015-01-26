@@ -103,6 +103,20 @@ class ClassManagement extends Controller
         $model = $this->model('TeacherClass');
         $className = $param;
         $teacherName = $_SESSION['username'];
+        $message = '';
+
+        if (isset($_POST['studentName']) && !empty($_POST['studentName'])) {
+
+            $studentName = $_POST['studentName'];
+
+            if ($model->addStudent($studentName, $className, $teacherName)) {
+                $message = 'Record Added';
+            } else {
+                $message = 'Failed to insert record, please try again.';
+            }
+
+
+        }
 
         $students = $model->getStudents($className, $teacherName);
 
@@ -110,8 +124,61 @@ class ClassManagement extends Controller
         $this->view('classmanagement/inspect', [
             'students' => $students,
             'className' => $className,
-            'teacherName' => $teacherName
+            'teacherName' => $teacherName,
+            'message' => $message
         ]);
+    }
+
+    public function edit($param = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $message = '';
+
+        $model = $this->model('TeacherClass');
+
+        if(isset($_POST['newName']) && !empty($_POST['newName'])) {
+            $studentID = $param;
+            $newName = $_POST['newName'];
+            $teacherName = $_SESSION['username'];
+
+            if ($model->editStudentName($studentID, $newName, $teacherName)) {
+                $message = 'Name Updated';
+            } else {
+                $message = 'Name failed to update, please try again';
+            }
+        }
+
+
+
+        $this->view('classmanagement/edit', [
+            'message' => $message
+        ]);
+    }
+
+    public function deleteStudent($param = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $error = '';
+
+        $model = $this->model('TeacherClass');
+
+        $teacherName = $_SESSION['username'];
+
+        if ($model->deleteStudent($param, $teacherName)) {
+            header('Location: /Assessmentdatabase/public/classmanagement/');
+            die();
+        } else {
+            $error = 'Error, name was not deleted. Please try again';
+        }
+
+        $this->view('classmanagement/delete', [
+            'error' => $error
+        ]);
+
     }
 
 }
