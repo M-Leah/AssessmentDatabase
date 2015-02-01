@@ -1,0 +1,14 @@
+table {
+    margin: auto;
+    text-align: center;
+}
+
+td {
+    padding: 5px;
+}
+
+tr:first-child {
+    color: #ffffff;
+    background-color: cadetblue;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html>
-    <head>
+<head>
+    <link rel="stylesheet" href="../../../../public/css/header.css">
+    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../../../public/css/tables.css">
+</head>
+<body>
+        <h1 class="main_title">Class Management: <?= $data['className']; ?> </h1>
 
-    </head>
-    <body>
-        ClassManagement / View.
+        <br>
 
-        <br><br>
+        <div class="center-block text-center">
 
-        ClassList (WIP) <br>
+            Class List
+            <br><br>
 
 
         <table border="1">
@@ -28,8 +34,8 @@
                 echo '<td>' . $student[1] . '</td>';
                 echo '<td>' . $student[2] . '</td>';
                 echo '<td>' . $student[3] . '</td>';
-                echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/edit/' . $student[0] . '/">EDITICON</a></td>';
-                echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/deletestudent/' . $student[0] . '/">DELETEICON</a></td>';
+                echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/edit/' . $student[0] . '/"><span class="glyphicon glyphicon-edit"> </span></a></td>';
+                echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/deletestudent/' . $student[0] . '/"><span class="glyphicon glyphicon-remove"> </span></a></td>';
                 echo '</tr>';
             }
         ?>
@@ -46,6 +52,8 @@
 
         <br>
         <a href="/AssessmentDatabase/public/ClassManagement/">Back to Class Management</a>
+
+        </div>
 
     </body>
 </html>

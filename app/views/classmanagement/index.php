@@ -1,18 +1,26 @@
 <!DOCTYPE html>
-
 <html>
-    <head></head>
-    <body>
-        Class Management -> Index.
-        <br><br>
+<head>
+    <link rel="stylesheet" href="../../public/css/header.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../public/css/tables.css">
+</head>
+<body>
 
-        Current Classes: <hr>
+    <h1 class="main_title">Class Management</h1>
 
+    <div class="center-block text-center">
 
-        <table border="1">
+        <br>
+        <h2>Current Classes</h2>
+
+        <hr>
+
+        <table class="table-bordered table-responsive">
             <tr>
                 <td>Class ID</td>
-                <td>Data Class Name</td>
+                <td>Class Name</td>
                 <td>Inspect</td>
                 <td>Mark</td>
                 <td>Delete</td>
@@ -23,16 +31,19 @@
                         echo '<tr>';
                         echo '<td>' . $class[0] . '</td>';
                         echo '<td>' . $class[1] . '</td>';
-                        echo '<td> <a href="' . '/AssessmentDatabase/public/ClassManagement/inspect/' . $class[1] . '/">InspectIcon</a></td>';
-                        echo '<td> MarkIcon </td>';
-                        echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/delete/' . $class[1] . '/">DELETEICON</a></td>';
+                        echo '<td> <a href="' . '/AssessmentDatabase/public/ClassManagement/inspect/' . $class[1] . '/"><span class="glyphicon glyphicon-search"> </span></a></td>';
+                        echo '<td> <a href="#"><span class="glyphicon glyphicon-edit"> </span></a></td>';
+                        echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/delete/' . $class[1] . '/"><span class="glyphicon glyphicon-remove"> </span></a></td>';
                         echo '</tr>';
                     }
                 }
             ?>
         </table>
         <br>
-        <a href="/AssessmentDatabase/public/classmanagement/create/">Create new class</a>
+        <a href="/AssessmentDatabase/public/classmanagement/create/"><button type="button" class="btn btn-default">Add new class</button></a>
+
+        <br><br><a href="/AssessmentDatabase/public/index/">&larr; Home</a>
+        </div>
 
 
     </body>

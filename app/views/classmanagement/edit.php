@@ -1,11 +1,28 @@
-Classmanagement / Edit
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../../../../public/css/header.css">
+    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../../../public/css/tables.css">
+</head>
+<body>
 
-<hr>
-<form action="" method="POST">
-    <label for="newName">Change name to: </label><input type="text" name="newName">
-    <input type="submit" value="Update">
-</form>
+    <h1 class="main_title">Edit Student</h1>
 
-<?= $data['message']; ?> <br>
+    <div class="text-center center-block">
 
-<a href="/AssessmentDatabase/public/Classmanagement/">Back to Class Management</a>
+    <hr>
+        <form action="" method="POST">
+            Change name to:<br>
+            <input type="text" name="newName">
+            <input type="submit" value="Update">
+        </form>
+
+        <?= $data['message']; ?> <br>
+
+        <a href="/AssessmentDatabase/public/Classmanagement/">Back to Class Management</a>
+
+    </div>
+</body>
+</html>
