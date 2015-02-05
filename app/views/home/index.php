@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../public/css/header.css">
-    <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/header.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap-theme.min.css">
 </head>
 <body>
 
@@ -15,6 +15,8 @@
 
     <ul class="list-inline">
         <li><a href="/AssessmentDatabase/public/profile/">Profile</a></li>
+        <li>/</li>
+        <li><a href="/AssessmentDatabase/public/UnitManagement/">Unit Management</a></li>
         <li>/</li>
         <li><a href="/AssessmentDatabase/public/ClassManagement/">Class Management</a></li>
         <li>/</li>

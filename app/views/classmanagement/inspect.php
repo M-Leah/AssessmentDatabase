@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../../../public/css/header.css">
-    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../../../../public/css/tables.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/header.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/tables.css">
 </head>
 <body>
         <h1 class="main_title">Class Management: <?= $data['className']; ?> </h1>

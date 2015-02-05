@@ -1,6 +1,7 @@
 table {
     margin: auto;
     text-align: center;
+    max-width: 66%;
 }
 
 td {
