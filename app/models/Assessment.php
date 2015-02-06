@@ -140,5 +140,71 @@ class Assessment
         return false;
     }
 
+    /**
+     * Method to return strands related to certain strands
+     * @param $reference
+     * @return array|bool
+     */
+    public function getStrandByReference($reference)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM `strand` WHERE `strand_id` LIKE :reference");
+        $reference .= '%';
+        $statement->bindParam(':reference', $reference);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * @param $strandStorageOne
+     * @param $strandStorageTwo
+     * @return array
+     */
+    public function handleDuplicateStrands($partialArray, $fullArray)
+    {
+        if (is_array($partialArray) && is_array($fullArray))
+        {
+
+            // Remaps the Partial Array to have the same structure as the Full Array.
+            $length = count($partialArray);
+            for ($count = 0; $count < $length; $count++)
+            {
+                $newArray[$count] = call_user_func_array('array_merge', $partialArray[$count]);
+            }
+
+
+            // ----------------------------------------
+
+            $partialArray = $newArray;
+            $tempArray = [];
+            foreach($fullArray as $element)
+            {
+                $found = false;
+                foreach($partialArray as $subElement)
+                {
+                    if($element['strand_id'] == $subElement['strand_id'])
+                    {
+                        $found = true;
+                    }
+                }
+                if(!$found) $tempArray[] = $element;
+            }
+
+            return $tempArray;
+
+        }
+
+
+    }
+
 
 }

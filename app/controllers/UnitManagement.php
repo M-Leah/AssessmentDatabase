@@ -67,11 +67,41 @@ class UnitManagement extends Controller
             array_push($strand, $model->getStrandByID($element['strand_id']));
         }
 
+        $allRelatedStrands = [];
+        if (isset($_POST['strands']) && !empty($_POST['strands']))
+        {
+            $strandReference = $_POST['strands'];
+            switch ($strandReference) {
+                case 0:
+                    break;
+                case 1:
+                    $reference = 'CS';
+                    $allRelatedStrands = $model->getStrandByReference($reference);
+                    $nonDuplicateStrands = $model->handleDuplicateStrands($strand, $allRelatedStrands);
+                    break;
+                case 2:
+                    $reference = 'IT';
+                    $allRelatedStrands = $model->getStrandByReference($reference);
+                    $nonDuplicateStrands = $model->handleDuplicateStrands($strand, $allRelatedStrands);
+                    break;
+                case 3:
+                    $reference = 'DL';
+                    $allRelatedStrands = $model->getStrandByReference($reference);
+                    $nonDuplicateStrands = $model->handleDuplicateStrands($strand, $allRelatedStrands);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
 
         $this->view('unitmanagement/edit', [
             'criteria' => $criteria,
             'unitName' => $unitName,
-            'strandDetails' => $strand
+            'strandDetails' => $strand,
+            'strandReference' => $nonDuplicateStrands,
         ]);
     }
 
