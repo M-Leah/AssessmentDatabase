@@ -27,13 +27,14 @@
                 <td>Remove Strand</td>
             </tr>
             <?php
-                foreach ($data['strandDetails'] as $strand)
-                {
-                    echo '<tr>';
-                    echo '<td>' . $strand[0]['strand_id'] . '</td>';
-                    echo '<td>' . $strand[0]['strand_description'] . '</td>';
-                    echo '<td> <a href="#"><span class="glyphicon glyphicon-remove"> </span></a></td>';
-                    echo '</tr>';
+                if ($data['strandDetails'] != null) {
+                    foreach ($data['strandDetails'] as $strand) {
+                        echo '<tr>';
+                        echo '<td>' . $strand[0]['strand_id'] . '</td>';
+                        echo '<td>' . $strand[0]['strand_description'] . '</td>';
+                        echo '<td> <a href="/AssessmentDatabase/public/UnitManagement/deletestrand/' . $data['unitName'][0]['unit_id'] . '/' . $strand[0]['strand_id'] . '/""><span class="glyphicon glyphicon-remove"> </span></a></td>';
+                        echo '</tr>';
+                    }
                 }
             ?>
             </table>
@@ -70,7 +71,7 @@
                             echo '<tr>';
                             echo '<td>' . $strand['strand_id'] . '</td>';
                             echo '<td>' . $strand['strand_description'] . '</td>';
-                            echo '<td> <a href="#"><span class="glyphicon glyphicon-plus"> </span></a></td>';
+                            echo '<td> <a href="/AssessmentDatabase/public/UnitManagement/addstrand/'. $data['unitName'][0]['unit_id'] .'/' . $strand['strand_id'] .'/"><span class="glyphicon glyphicon-plus"> </span></a></td>';
                             echo '</tr>';
                         }
 

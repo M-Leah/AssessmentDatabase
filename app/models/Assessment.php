@@ -171,40 +171,85 @@ class Assessment
      */
     public function handleDuplicateStrands($partialArray, $fullArray)
     {
-        if (is_array($partialArray) && is_array($fullArray))
-        {
+        if ($partialArray == []) {
+            return $fullArray;
+        } else {
 
-            // Remaps the Partial Array to have the same structure as the Full Array.
-            $length = count($partialArray);
-            for ($count = 0; $count < $length; $count++)
-            {
-                $newArray[$count] = call_user_func_array('array_merge', $partialArray[$count]);
-            }
+            if (is_array($partialArray) && is_array($fullArray)) {
 
-
-            // ----------------------------------------
-
-            $partialArray = $newArray;
-            $tempArray = [];
-            foreach($fullArray as $element)
-            {
-                $found = false;
-                foreach($partialArray as $subElement)
-                {
-                    if($element['strand_id'] == $subElement['strand_id'])
-                    {
-                        $found = true;
-                    }
+                // Remaps the Partial Array to have the same structure as the Full Array.
+                $length = count($partialArray);
+                for ($count = 0; $count < $length; $count++) {
+                    $newArray[$count] = call_user_func_array('array_merge', $partialArray[$count]);
                 }
-                if(!$found) $tempArray[] = $element;
+
+
+                // ----------------------------------------
+
+                $partialArray = $newArray;
+                $tempArray = [];
+                foreach ($fullArray as $element) {
+                    $found = false;
+                    foreach ($partialArray as $subElement) {
+                        if ($element['strand_id'] == $subElement['strand_id']) {
+                            $found = true;
+                        }
+                    }
+                    if (!$found) $tempArray[] = $element;
+                }
+
+                return $tempArray;
+
             }
-
-            return $tempArray;
-
         }
 
 
     }
+
+    /**
+     * Add a strand/criteria onto a unit
+     * @param $unitID
+     * @param $strandID
+     * @return bool
+     */
+    public function addStrand($unitID, $strandID)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("INSERT INTO criteria (unit_id, strand_id) VALUES (:unitID, :strandID);");
+        $statement->bindParam(':unitID', $unitID);
+        $statement->bindParam(':strandID', $strandID);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Remove a strand/criteria from a unit
+     * @param $unitID
+     * @param $strandID
+     * @return bool
+     */
+    public function removeStrand($unitID, $strandID)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("DELETE FROM criteria WHERE unit_id = :unitID AND strand_id = :strandID;");
+        $statement->bindParam(':unitID', $unitID);
+        $statement->bindParam(':strandID', $strandID);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
 
 
 }

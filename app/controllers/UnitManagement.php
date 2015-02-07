@@ -62,14 +62,17 @@ class UnitManagement extends Controller
         $unitName = $model->getUnitByID($unitID);
         $criteria = $model->getCriteria($unitID);
         $strand = [];
+        $nonDuplicateStrands = [];
 
-        foreach ($criteria as $element) {
-            array_push($strand, $model->getStrandByID($element['strand_id']));
+        //added
+        if (is_array($criteria)) {//added
+            foreach ($criteria as $element) {
+                array_push($strand, $model->getStrandByID($element['strand_id']));
+            }
         }
 
         $allRelatedStrands = [];
-        if (isset($_POST['strands']) && !empty($_POST['strands']))
-        {
+        if (isset($_POST['strands']) && !empty($_POST['strands'])) {
             $strandReference = $_POST['strands'];
             switch ($strandReference) {
                 case 0:
@@ -97,6 +100,7 @@ class UnitManagement extends Controller
 
 
 
+
         $this->view('unitmanagement/edit', [
             'criteria' => $criteria,
             'unitName' => $unitName,
@@ -104,6 +108,47 @@ class UnitManagement extends Controller
             'strandReference' => $nonDuplicateStrands,
         ]);
     }
+
+    public function addStrand($paramOne = '', $paramTwo = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $model = $this->model('Assessment');
+        $unitID = $paramOne;
+        $strandID = $paramTwo;
+
+        if ($model->addStrand($unitID, $strandID))
+        {
+            header('Location: /AssessmentDatabase/public/unitmanagement/edit/' . $unitID);
+            die();
+        }
+
+
+        $this->view('unitmanagement/addstrand', []);
+
+    }
+
+    public function deleteStrand($paramOne = '', $paramTwo = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $model = $this->model('Assessment');
+        $unitID = $paramOne;
+        $strandID = $paramTwo;
+
+        if ($model->removeStrand($unitID, $strandID))
+        {
+            header('Location: /AssessmentDatabase/public/unitmanagement/edit/' . $unitID);
+            die();
+        }
+
+
+        $this->view('unitmanagement/removestrand', []);
+
+    }
+
 
 
 }
