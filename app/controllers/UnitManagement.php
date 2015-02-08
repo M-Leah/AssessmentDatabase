@@ -13,7 +13,7 @@ class UnitManagement extends Controller
         Session::startSession();
         Session::handleLogin();
 
-        $model = $this->model('Assessment');
+        $model = $this->model('Unit');
         $units = $model->getUnits(Session::get('username'));
 
         if (isset($_POST['unitName']) && !empty($_POST['unitName'])) {
@@ -38,7 +38,7 @@ class UnitManagement extends Controller
         $unitID = $param;
 
 
-        $model = $this->model('Assessment');
+        $model = $this->model('Unit');
         if ($model->deleteUnit($unitID, Session::get('username')))
         {
             header('Location: /AssessmentDatabase/public/UnitManagement/');
@@ -56,7 +56,7 @@ class UnitManagement extends Controller
         Session::startSession();
         Session::handleLogin();
 
-        $model = $this->model('Assessment');
+        $model = $this->model('Unit');
         $unitID = $param;
 
         $unitName = $model->getUnitByID($unitID);
@@ -114,7 +114,7 @@ class UnitManagement extends Controller
         Session::startSession();
         Session::handleLogin();
 
-        $model = $this->model('Assessment');
+        $model = $this->model('Unit');
         $unitID = $paramOne;
         $strandID = $paramTwo;
 
@@ -134,7 +134,7 @@ class UnitManagement extends Controller
         Session::startSession();
         Session::handleLogin();
 
-        $model = $this->model('Assessment');
+        $model = $this->model('Unit');
         $unitID = $paramOne;
         $strandID = $paramTwo;
 
@@ -148,6 +148,8 @@ class UnitManagement extends Controller
         $this->view('unitmanagement/removestrand', []);
 
     }
+
+
 
 
 

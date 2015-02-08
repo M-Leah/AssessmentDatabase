@@ -181,4 +181,50 @@ class ClassManagement extends Controller
 
     }
 
+    public function mark($param = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $className = $param;
+
+        $model = $this->model('Assessment');
+        $unitModel = $this->model('Unit');
+        $classModel = $this->model('TeacherClass');
+
+        $units = $unitModel->getUnits(Session::get('username'));
+
+        if (isset($_POST['identifier']) && isset($_POST['unit'])) {
+            if (!empty($_POST['identifier']) && !empty($_POST['unit'])) {
+                $identifier = $_POST['identifier'];
+                $unitID = $_POST['unit'];
+
+                // get all students in class
+                $students = $classModel->getStudents($className, Session::get('username'));
+
+                // get all unit strands
+                $strands = $unitModel->getCriteria($unitID);
+
+                foreach ($students as $student)
+                {
+                    // For each student insert into the model.
+                    foreach ($strands as $strand)
+                    {
+                        // Links students to the criteria they will be marked against.
+                        $model->createAssessmentGroup($student['student_name'], $unitID, $strand['strand_id'], $identifier, Session::get('username'));
+                    }
+                }
+            }
+        }
+
+        $assessments = $model->getIdentifiersByTeacher(Session::get('username'));
+
+        $this->view('classmanagement/mark', [
+            'className' => $className,
+            'units' => $units,
+            'assessments' => $assessments
+        ]);
+
+    }
+
 }
