@@ -14,7 +14,7 @@
 
     <div class="center-block text-center">
 
-        Select the Unit you wish to mark and create a UNIQUE identifier for it.
+        Select the Unit you wish to mark and create a UNIQUE identifier for it. (Max. 16 Characters)
 
         <br><br>
 

@@ -240,9 +240,16 @@ class ClassManagement extends Controller
         $className = $paramOne;
         $identifier = $paramTwo;
 
+        $model = $this->model('Assessment');
+        $unitModel = $this->model('Unit');
+        $classModel = $this->model('TeacherClass');
+
+        $students = $classModel->getStudents($className, Session::get('username'));
+
         $this->view('classmanagement/mark', [
             'className' => $className,
-            'identifier' => $identifier
+            'identifier' => $identifier,
+            'students' => $students
         ]);
     }
 

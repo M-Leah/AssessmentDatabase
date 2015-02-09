@@ -78,6 +78,7 @@ class Assessment
         return false;
     }
 
+
     /**
      * Method to prevent duplicate identifiers being used in the database per teacher.
      * @param $teacherName
@@ -101,6 +102,30 @@ class Assessment
         // Identifier does not already exist for the teacher
         return false;
 
+    }
+
+    /**
+     * Method for getting the contents of an assessment group in preparation for marking
+     * @param $teacherName
+     * @param $identifier
+     * @return array|bool
+     */
+    public function getAssessmentGroupDetails($teacherName, $identifier)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM `assessment` WHERE identifier = :identifier AND teacher_name = :teacherName;");
+        $statement->bindParam(':identifier', $identifier);
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0 ) {
+            return $result;
+        }
+
+        return false;
     }
 
 }
