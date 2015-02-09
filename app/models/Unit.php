@@ -32,6 +32,34 @@ class Unit
     }
 
     /**
+     * Returns all the Unit IDs which have criteria attached.
+     * @param $teacherName
+     * @return bool|mixed
+     */
+    public function getUnitsWithCriteria($teacherName)
+    {
+        $sql = "SELECT DISTINCT(criteria.unit_id), unit_name FROM `unit`
+                LEFT JOIN criteria
+                ON unit.unit_id = criteria.unit_id
+                WHERE teacher_name = :teacherName
+                AND criteria.unit_id IS NOT NULL;";
+
+        $db = Database::getInstance();
+
+        $statement = $db->prepare($sql);
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
+    /**
      * Method for inserting new units into the database
      * @param $unitName
      * @param $teacherName

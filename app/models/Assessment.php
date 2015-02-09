@@ -34,6 +34,29 @@ class Assessment
     }
 
     /**
+     * Method for deleting an assessment group
+     * @param $identifier
+     * @param $teacherName
+     * @return bool
+     */
+    public function deleteAssessmentGroup($identifier, $teacherName)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("DELETE FROM assessment WHERE identifier = :identifier AND teacher_name = :teacherName;");
+        $statement->bindParam(':identifier', $identifier);
+        $statement->bindParam(':teacherName', $teacherName);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+
+    /**
      * Returns all the identifiers used to recognise assessments
      * @param $teacherName
      * @return array|bool
@@ -53,6 +76,31 @@ class Assessment
         }
 
         return false;
+    }
+
+    /**
+     * Method to prevent duplicate identifiers being used in the database per teacher.
+     * @param $teacherName
+     * @param $identifier
+     * @return bool
+     */
+    public function handleDuplicateIdentifiers($teacherName, $identifier)
+    {
+        if ($currentIdentifiers = self::getIdentifiersByTeacher($teacherName)) {
+            // Identifiers exist
+            foreach ($currentIdentifiers as $uniqueID)
+            {
+                if ($uniqueID['identifier'] == $identifier)
+                {
+                    // Identifier has been used previously by the teacher
+                    return true;
+                }
+            }
+        }
+
+        // Identifier does not already exist for the teacher
+        return false;
+
     }
 
 }

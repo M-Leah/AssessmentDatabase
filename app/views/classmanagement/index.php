@@ -32,7 +32,7 @@
                         echo '<td>' . $class[0] . '</td>';
                         echo '<td>' . $class[1] . '</td>';
                         echo '<td> <a href="' . '/AssessmentDatabase/public/ClassManagement/inspect/' . $class[1] . '/"><span class="glyphicon glyphicon-search"> </span></a></td>';
-                        echo '<td> <a href="/AssessmentDatabase/public/ClassManagement/mark/' . $class[1] . '"><span class="glyphicon glyphicon-edit"> </span></a></td>';
+                        echo '<td> <a href="/AssessmentDatabase/public/ClassManagement/assess/' . $class[1] . '"><span class="glyphicon glyphicon-edit"> </span></a></td>';
                         echo '<td> <a href="' . '/AssessmentDatabase/public/classmanagement/delete/' . $class[1] . '/"><span class="glyphicon glyphicon-remove"> </span></a></td>';
                         echo '</tr>';
                     }

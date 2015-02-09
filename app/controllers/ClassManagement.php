@@ -181,48 +181,89 @@ class ClassManagement extends Controller
 
     }
 
-    public function mark($param = '')
+    public function assess($param = '')
     {
         Session::startSession();
         Session::handleLogin();
 
         $className = $param;
+        $error = '';
 
         $model = $this->model('Assessment');
         $unitModel = $this->model('Unit');
         $classModel = $this->model('TeacherClass');
 
-        $units = $unitModel->getUnits(Session::get('username'));
+        $units = $unitModel->getUnitsWithCriteria(Session::get('username'));
 
         if (isset($_POST['identifier']) && isset($_POST['unit'])) {
             if (!empty($_POST['identifier']) && !empty($_POST['unit'])) {
                 $identifier = $_POST['identifier'];
-                $unitID = $_POST['unit'];
 
-                // get all students in class
-                $students = $classModel->getStudents($className, Session::get('username'));
+                if ($model->handleDuplicateIdentifiers(Session::get('username'), $identifier) === false) {
+                    $unitID = $_POST['unit'];
 
-                // get all unit strands
-                $strands = $unitModel->getCriteria($unitID);
+                    // get all students in class
+                    $students = $classModel->getStudents($className, Session::get('username'));
 
-                foreach ($students as $student)
-                {
-                    // For each student insert into the model.
-                    foreach ($strands as $strand)
-                    {
-                        // Links students to the criteria they will be marked against.
-                        $model->createAssessmentGroup($student['student_name'], $unitID, $strand['strand_id'], $identifier, Session::get('username'));
+                    // get all unit strands
+                    $strands = $unitModel->getCriteria($unitID);
+
+                    foreach ($students as $student) {
+                        // For each student insert into the model.
+                        foreach ($strands as $strand) {
+                            // Links students to the criteria they will be marked against.
+                            $model->createAssessmentGroup($student['student_name'], $unitID, $strand['strand_id'], $identifier, Session::get('username'));
+                        }
                     }
                 }
+
+                $error = 'You have used that identifier for another class, please create a UNIQUE identifier';
             }
         }
 
-        $assessments = $model->getIdentifiersByTeacher(Session::get('username'));
+        $assessments = $model->getIdentifiersByTeacher(Session::get('username')) ? : $assessments = '';
+
+        $this->view('classmanagement/assess', [
+            'className' => $className,
+            'units' => $units,
+            'assessments' => $assessments,
+            'error' => $error
+        ]);
+
+    }
+
+    public function mark($paramOne = '', $paramTwo = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $className = $paramOne;
+        $identifier = $paramTwo;
 
         $this->view('classmanagement/mark', [
             'className' => $className,
-            'units' => $units,
-            'assessments' => $assessments
+            'identifier' => $identifier
+        ]);
+    }
+
+    public function deleteAssessment($paramOne = '', $paramTwo = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $className = $paramOne;
+        $identifier = $paramTwo;
+
+
+        $model = $this->model('Assessment');
+
+        if ($model->deleteAssessmentGroup($identifier, Session::get('username'))) {
+            header('Location: /AssessmentDatabase/public/classmanagement/assess/' . $className);
+            die();
+        }
+
+        $this->view('classmanagement/delete', [
+            'error' => 'Could not delete assessment group, please try again'
         ]);
 
     }
