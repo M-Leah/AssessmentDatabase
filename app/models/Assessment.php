@@ -128,4 +128,44 @@ class Assessment
         return false;
     }
 
+    /**
+     * Method to return a singular students assessment details
+     * @param $studentName
+     * @param $teacherName
+     * @param $identifier
+     * @return array|bool
+     */
+    public function getStudentAssessmentDetails($studentName, $teacherName, $identifier)
+    {
+        // Prepare the string for a like query
+        $newStudentName = '';
+        $length = strlen($studentName);
+        $endCount = $length - 1;
+
+        for ($count = 0; $count < $length; $count++)
+        {
+            $newStudentName .= $studentName[$count];
+            if ($count < $endCount) {
+                $newStudentName .= '%';
+            }
+        }
+
+
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM `assessment` WHERE student_name LIKE :studentName AND teacher_name = :teacherName AND identifier = :identifier;");
+        $statement->bindParam(':studentName', $newStudentName);
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->bindParam(':identifier', $identifier);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
 }

@@ -232,7 +232,7 @@ class ClassManagement extends Controller
 
     }
 
-    public function mark($paramOne = '', $paramTwo = '')
+    public function mark($paramOne = '', $paramTwo = '', $paramThree = '')
     {
         Session::startSession();
         Session::handleLogin();
@@ -240,17 +240,44 @@ class ClassManagement extends Controller
         $className = $paramOne;
         $identifier = $paramTwo;
 
-        $model = $this->model('Assessment');
         $unitModel = $this->model('Unit');
-        $classModel = $this->model('TeacherClass');
 
-        $students = $classModel->getStudents($className, Session::get('username'));
+        if (!empty($paramThree)) {
 
-        $this->view('classmanagement/mark', [
-            'className' => $className,
-            'identifier' => $identifier,
-            'students' => $students
-        ]);
+            $assessmentModel = $this->model('Assessment');
+
+            $studentName = $paramThree;
+            $studentDetails = $assessmentModel->getStudentAssessmentDetails($studentName, Session::get('username'), $identifier);
+
+            $strandArray = [];
+            foreach ($studentDetails as $detail) {
+                $strandArray[] = $unitModel->getStrandByID($detail['strand_id']);
+            }
+
+           $this->view('classmanagement/markStudent', [
+               'className' => $className,
+               'identifier' => $identifier,
+               'studentName' => $studentName,
+               'studentDetails' => $studentDetails,
+               'strandArray' => $strandArray
+           ]);
+        } else {
+
+            $classModel = $this->model('TeacherClass');
+
+
+            $students = $classModel->getStudents($className, Session::get('username'));
+            $unitName = $unitModel->getUnitByIdentifier(Session::get('username'), $identifier);
+
+            $this->view('classmanagement/mark', [
+                'className' => $className,
+                'identifier' => $identifier,
+                'students' => $students,
+                'unitName' => $unitName
+            ]);
+        }
+
+
     }
 
     public function deleteAssessment($paramOne = '', $paramTwo = '')

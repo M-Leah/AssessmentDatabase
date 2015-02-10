@@ -146,6 +146,36 @@ class Unit
         return false;
     }
 
+    /**
+     * Method which returns a unit that is linked to an identifier
+     * @param $teacherName
+     * @param $identifier
+     * @return array|bool
+     */
+    public function getUnitByIdentifier($teacherName, $identifier)
+    {
+        $sql = "SELECT DISTINCT(assessment.unit_id), unit_name FROM `assessment`
+                LEFT JOIN unit
+                ON assessment.unit_id = unit.unit_id
+                WHERE identifier = :identifier
+                AND assessment.teacher_name = :teacherName;";
+
+        $db = Database::getInstance();
+
+        $statement = $db->prepare($sql);
+        $statement->bindParam(':identifier', $identifier);
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
 
     /**
      * @param $strandID
