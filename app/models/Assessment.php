@@ -168,4 +168,27 @@ class Assessment
         return false;
     }
 
+    /**
+     * Method to update the traffic light and comment in a student's assessment
+     * @param $trafficLight
+     * @param $comment
+     * @param $assessmentID
+     * @return bool
+     */
+    public function updateStudentAssessment($trafficLight, $comment, $assessmentID)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("UPDATE assessment SET trafficlight = :trafficLight, comment = :comment WHERE assessment_id = :assessmentID;");
+        $statement->bindParam(':trafficLight', $trafficLight);
+        $statement->bindParam(':comment', $comment);
+        $statement->bindParam(':assessmentID', $assessmentID);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

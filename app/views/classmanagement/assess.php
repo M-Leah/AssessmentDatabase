@@ -50,7 +50,7 @@
         ?>
     </table>
 
-
+    <a href="/AssessmentDatabase/public/ClassManagement/">Back</a>
 
 
     </div>

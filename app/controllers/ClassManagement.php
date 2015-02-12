@@ -254,13 +254,57 @@ class ClassManagement extends Controller
                 $strandArray[] = $unitModel->getStrandByID($detail['strand_id']);
             }
 
-           $this->view('classmanagement/markStudent', [
+            if (isset($_POST) && !empty($_POST)) {
+
+                $count = 0;
+                foreach ($studentDetails as $detail) {
+
+                    $commentName = 'comment_' . $count;
+                    $lightCode = $_POST[$detail['assessment_id']];
+                    $comment = $_POST[$commentName];
+                    $count++;
+
+                    switch ($lightCode) {
+                        case 0:
+                            // Do nothing
+                            break;
+                        case 1:
+                            // Red
+                            $assessmentModel->updateStudentAssessment('Red', $comment, $detail['assessment_id']);
+                            $flag = true;
+                            break;
+                        case 2:
+                            // Amber
+                            $assessmentModel->updateStudentAssessment('Amber', $comment, $detail['assessment_id']);
+                            $flag = true;
+                            break;
+                        case 3:
+                            // Green
+                            $assessmentModel->updateStudentAssessment('Green', $comment, $detail['assessment_id']);
+                            $flag = true;
+                            break;
+                        default:
+                            // Do nothing
+                            break;
+                    }
+                }
+
+                if ($flag === true) {
+                    header('Location: /AssessmentDatabase/public/ClassManagement/Mark/' . $className . '/' . $identifier);
+                    $flag = false;
+                }
+            }
+
+            // $trafficLight, $comment, $assessmentID
+
+            $this->view('classmanagement/markStudent', [
                'className' => $className,
                'identifier' => $identifier,
                'studentName' => $studentName,
                'studentDetails' => $studentDetails,
                'strandArray' => $strandArray
            ]);
+
         } else {
 
             $classModel = $this->model('TeacherClass');
