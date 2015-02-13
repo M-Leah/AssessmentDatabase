@@ -8,7 +8,7 @@
 class Assessment
 {
     /**
-     * Links all the criteria strands to the students in preparation for marking
+     * Links all the criteria strands to the students in preparation for marking, and also links overall comments to the student
      * @param $studentName
      * @param $unitID
      * @param $strandID
@@ -27,6 +27,24 @@ class Assessment
         $statement->bindParam(':teacherName', $teacherName);
 
         if ($statement->execute()) {
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function createUnitComments($studentName, $unitID, $identifier, $teacherName)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("INSERT INTO unitcomments (unit_id, student_name, teacher_name, identifier) VALUES (:unitID, :studentName, :teacherName, :identifier);");
+        $statement->bindParam(':unitID', $unitID);
+        $statement->bindParam(':studentName', $studentName);
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->bindParam(':identifier', $identifier);
+
+        if ($statement->execute()) {
             return true;
         }
 
@@ -34,7 +52,7 @@ class Assessment
     }
 
     /**
-     * Method for deleting an assessment group
+     * Method for deleting an assessment group and overall unit comments
      * @param $identifier
      * @param $teacherName
      * @return bool
@@ -48,7 +66,16 @@ class Assessment
         $statement->bindParam(':teacherName', $teacherName);
 
         if ($statement->execute()) {
-            return true;
+
+            $statement = $db->prepare("DELETE FROM unitcomments WHERE identifier = :identifier AND teacher_name = :teacherName;");
+            $statement->bindParam(':identifier', $identifier);
+            $statement->bindParam(':teacherName', $teacherName);
+
+            if ($statement->execute()) {
+                return true;
+            }
+
+            return false;
         }
 
         return false;
@@ -76,6 +103,13 @@ class Assessment
         }
 
         return false;
+    }
+
+    public function getIdentifiersByTeacherClass($teacherName, $className)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->preapre("SELECT DISTINCT(identifier) FROM assesment WHERE teacher_name = :teacherName ");
     }
 
 
@@ -189,6 +223,52 @@ class Assessment
         }
 
         return false;
+    }
+
+    /**
+     * Returns the overall unit comments for students of a specified assessment group
+     * @param $teacherName
+     * @param $identifier
+     * @return array|bool
+     */
+    public function getStudentOverallComments($teacherName, $identifier)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM unitcomments WHERE teacher_name = :teacherName AND identifier = :identifier;");
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->bindParam(':identifier', $identifier);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
+    /**
+     * Updates the overall unit comments table for students.
+     * @param $comment
+     * @param $id
+     * @return bool
+     */
+    public function updateStudentOverallComments($comment, $id)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("UPDATE unitcomments SET comment = :comment WHERE id = :ID;");
+        $statement->bindParam(':comment', $comment);
+        $statement->bindParam(':ID', $id);
+
+        if ($statement->execute()) {
+            return true;
+        }
+
+        return false;
+
     }
 
 }

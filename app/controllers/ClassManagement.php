@@ -56,6 +56,8 @@ class ClassManagement extends Controller
                     unlink($location . $fileDetails['fileName']);
                 }
 
+                header('Location: /AssessmentDatabase/public/ClassManagement/');
+
 
             } else {
                 $error =  'Not CSV File';
@@ -79,6 +81,7 @@ class ClassManagement extends Controller
         Session::handleLogin();
 
         $model = $this->model('TeacherClass');
+
         $className = $param;
         $teacherName = $_SESSION['username'];
 
@@ -214,6 +217,7 @@ class ClassManagement extends Controller
                             // Links students to the criteria they will be marked against.
                             $model->createAssessmentGroup($student['student_name'], $unitID, $strand['strand_id'], $identifier, Session::get('username'));
                         }
+                        $model->createUnitComments($student['student_name'], $unitID, $identifier, Session::get('username'));
                     }
                 }
 
@@ -241,10 +245,9 @@ class ClassManagement extends Controller
         $identifier = $paramTwo;
 
         $unitModel = $this->model('Unit');
+        $assessmentModel = $this->model('Assessment');
 
         if (!empty($paramThree)) {
-
-            $assessmentModel = $this->model('Assessment');
 
             $studentName = $paramThree;
             $studentDetails = $assessmentModel->getStudentAssessmentDetails($studentName, Session::get('username'), $identifier);
@@ -295,8 +298,6 @@ class ClassManagement extends Controller
                 }
             }
 
-            // $trafficLight, $comment, $assessmentID
-
             $this->view('classmanagement/markStudent', [
                'className' => $className,
                'identifier' => $identifier,
@@ -308,6 +309,16 @@ class ClassManagement extends Controller
         } else {
 
             $classModel = $this->model('TeacherClass');
+            $overallComments = $assessmentModel->getStudentOverallComments(Session::get('username'), $identifier);
+
+            if (isset($_POST) && !empty($_POST)) {
+                $count = 0;
+                foreach ($overallComments as $student) {
+                    $assessmentModel->updateStudentOverallComments($_POST[$count], $student['id']);
+                    $count++;
+                }
+                header('Location: /AssessmentDatabase/public/ClassManagement/Mark/' . $className . '/' . $identifier);
+            }
 
 
             $students = $classModel->getStudents($className, Session::get('username'));
@@ -317,7 +328,8 @@ class ClassManagement extends Controller
                 'className' => $className,
                 'identifier' => $identifier,
                 'students' => $students,
-                'unitName' => $unitName
+                'unitName' => $unitName,
+                'comments' => $overallComments
             ]);
         }
 

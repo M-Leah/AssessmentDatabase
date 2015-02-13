@@ -8,10 +8,16 @@
 class UnitManagement extends Controller
 {
 
-    public function index()
+    public function index($param = '')
     {
         Session::startSession();
         Session::handleLogin();
+
+        $failed = $param;
+        $error = '';
+        if ($failed == 'Failed') {
+            $error = 'Failed to delete unit, please make sure all connected strands are deleted first.';
+        }
 
         $model = $this->model('Unit');
         $units = $model->getUnits(Session::get('username'));
@@ -25,7 +31,8 @@ class UnitManagement extends Controller
 
 
         $this->view('unitmanagement/index', [
-            'units' => $units
+            'units' => $units,
+            'error' => $error
         ]);
     }
 
@@ -45,9 +52,7 @@ class UnitManagement extends Controller
             die();
         }
 
-        $this->view('unitmanagement/delete', [
-            'unit' => $unitID
-        ]);
+        header('Location: /AssessmentDatabase/public/UnitManagement/Failed/');
     }
 
 

@@ -24,14 +24,14 @@ class TeacherClass {
         $statement->bindParam(':teacher_name', $teacherName);
         if ($statement->execute())
         {
-            self::insertStudentCSV($fileLocation, $teacherName);
+            self::insertStudentCSV($fileLocation, $teacherName, $className);
         }
     }
 
     /**
      * @param $fileLocation
      */
-    public function insertStudentCSV($fileLocation, $user)
+    public function insertStudentCSV($fileLocation, $user, $className)
     {
         $db = Database::getInstance();
         $statement = $db->prepare("INSERT INTO student (student_name, class_name, teacher_name) VALUES (:student_name, :class_name, :teacher_name);");
@@ -42,13 +42,10 @@ class TeacherClass {
             if ($data[0] == 'student_name') {
                 unset($data[0]);
             }
-            elseif ($data[1] == 'class_name') {
-                unset($data[1]);
-            }
             else
             {
                 $statement->bindParam(':student_name', $data[0]);
-                $statement->bindParam(':class_name', $data[1]);
+                $statement->bindParam(':class_name', $className);
                 $statement->bindParam(':teacher_name', $user);
                 $statement->execute();
             }

@@ -29,7 +29,7 @@
         </form>
 
         <br>
-
+    <?php if (is_array($data['assessments'])) { ?>
     <table class="table-bordered table-responsive">
         <tr>
             <td>Assessment</td>
@@ -38,14 +38,15 @@
             <td>Delete</td>
         </tr>
         <?php
-            foreach($data['assessments'] as $assessment)
-            {
-                echo '<tr>';
-                echo '<td>' . $assessment['identifier'] . '</td>';
-                echo '<td>' . $assessment['unit_id'] . '</td>';
-                echo '<td><a href="/AssessmentDatabase/public/classmanagement/mark/' . $data['className'] . '/' . $assessment['identifier'] . '/">MarkIcon</a></td>';
-                echo '<td><a href="/AssessmentDatabase/public/classmanagement/deleteAssessment/' . $data['className'] . '/' . $assessment['identifier'] . '/">DeleteIcon</a></td>';
-                echo '</tr>';
+
+                foreach ($data['assessments'] as $assessment) {
+                    echo '<tr>';
+                    echo '<td>' . $assessment['identifier'] . '</td>';
+                    echo '<td>' . $assessment['unit_id'] . '</td>';
+                    echo '<td><a href="/AssessmentDatabase/public/classmanagement/mark/' . $data['className'] . '/' . $assessment['identifier'] . '/">MarkIcon</a></td>';
+                    echo '<td><a href="/AssessmentDatabase/public/classmanagement/deleteAssessment/' . $data['className'] . '/' . $assessment['identifier'] . '/">DeleteIcon</a></td>';
+                    echo '</tr>';
+                }
             }
         ?>
     </table>

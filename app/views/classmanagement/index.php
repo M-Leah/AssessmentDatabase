@@ -13,6 +13,7 @@
     <div class="center-block text-center">
 
         <br>
+        <?php if (is_array($data['classes'])) { ?>
         <h2>Current Classes</h2>
 
         <hr>
@@ -26,7 +27,6 @@
                 <td>Delete</td>
             </tr>
             <?php
-                if ($data['classes']) {
                     foreach ($data['classes'] as $class) {
                         echo '<tr>';
                         echo '<td>' . $class[0] . '</td>';

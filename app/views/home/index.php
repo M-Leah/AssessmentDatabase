@@ -14,8 +14,6 @@
 <div class="center-block text-center">
 
     <ul class="list-inline">
-        <li><a href="/AssessmentDatabase/public/profile/">Profile</a></li>
-        <li>/</li>
         <li><a href="/AssessmentDatabase/public/UnitManagement/">Unit Management</a></li>
         <li>/</li>
         <li><a href="/AssessmentDatabase/public/ClassManagement/">Class Management</a></li>

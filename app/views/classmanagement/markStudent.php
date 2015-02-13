@@ -77,10 +77,11 @@
             }
         ?>
 
-        <input type="submit" value="Update Assessment">
 
-        </form>
     </table>
+
+    <input type="submit" value="Update Assessment">
+    </form>
 
     <br>
     <br>

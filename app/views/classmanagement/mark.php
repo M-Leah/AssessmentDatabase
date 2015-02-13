@@ -17,20 +17,27 @@
         <td>Overall Comment</td>
     </tr>
 
+    <form action="" method="POST">
 <?php
-    foreach ($data['students'] as $student)
+    $count = 0;
+    foreach ($data['comments'] as $student)
     {
         echo '<tr>';
         echo '<td><a href="/Assessmentdatabase/public/classmanagement/mark/' . $data['className'] . '/' . $data['identifier']. '/' . $student['student_name'] . '/"> ' . $student['student_name'] . ' </a>';
         echo '<td>' . $data['unitName'][0]['unit_name'] . '</td>';
-        echo '<td><textarea rows="2" cols="20"></textarea></td>';
+        echo '<td><textarea rows="2" cols="20" name="' . $count . '">' . $student['comment'] . '</textarea></td>';
         echo '</tr>';
+        $count++;
     }
 ?>
-</table
+
+</table>
+
+    <input type="submit" value="Update Comments">
+    </form>
     <br>
 
-<input type="submit" value="Update Comments">
+
 <a href="/AssessmentDatabase/public/ClassManagement/assess/<?=$data['className'];?>">Back</a>
 
     </div>
