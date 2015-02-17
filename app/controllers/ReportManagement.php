@@ -18,10 +18,10 @@ class ReportManagement extends Controller
         if (isset($_POST['class']) && isset($_POST['report']) &&!empty($_POST['class']) && !empty($_POST['report'])) {
             switch($_POST['report']) {
                 case 1:
-                    header('Location: /AssessmentDatabase/public/reportmanagement/levels/' . $_POST['class']);
+                    header('Location: /AssessmentDatabase/public/reportmanagement/Levels/' . $_POST['class']);
                     break;
                 case 2:
-                    echo 'Redirect to Two';
+                    header('Location: /AssessmentDatabase/public/ReportManagement/StudentStrength/' . $_POST['class']);
                     break;
                 case 3:
                     echo 'Redirect to Three';
@@ -65,14 +65,46 @@ class ReportManagement extends Controller
         $scores = $converter->toNumericValue($assessmentDetails, $students);
         $levels = $converter->toLevel($scores);
 
-
-
-
-
         $this->view('reportmanagement/levels', [
             'students' => $students,
             'scores' => $scores,
             'levels' => $levels
+        ]);
+    }
+
+    public function studentStrength($param = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $className = $param;
+
+        $classModel = $this->model('TeacherClass');
+        $assessmentModel = $this->model('Assessment');
+
+        $students = $classModel->getStudents($className, Session::get('username'));
+        $assessmentDetails = $assessmentModel->getAssessmentDetailsByClass($className, Session::get('username'));
+
+        $converter = new Convert();
+        $scores = $converter->toNumericValue($assessmentDetails, $students);
+
+        $strongestStudent = $converter->returnStrongest($scores);
+        $weakestStudent = $converter->returnWeakest($scores);
+
+        foreach ($strongestStudent as $student) {
+            $strongestStudentsArray[] = $assessmentModel->getStudentAssessmentDetailsByName($student['student_name'], Session::get('username'));
+        }
+
+        foreach ($weakestStudent as $student) {
+            $weakestStudentsArray[] = $assessmentModel->getStudentAssessmentDetailsByName($student['student_name'], Session::get('username'));
+        }
+
+
+        $this->view('reportmanagement/studentstrength', [
+            'strongestStudents' => $strongestStudent,
+            'strongestStudentsDetails' => $strongestStudentsArray,
+            'weakestStudents' => $weakestStudent,
+            'weakestStudentsDetails' => $weakestStudentsArray
         ]);
     }
 }

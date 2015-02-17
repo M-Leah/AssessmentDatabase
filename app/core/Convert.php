@@ -122,4 +122,58 @@ class Convert
         return $levelArray;
 
     }
+
+    /**
+     * Method to return the strongest score within an array
+     * @param array $scores
+     * @return array
+     */
+    public function returnStrongest(Array $scores)
+    {
+        $maxValues = [];
+        $tempMaxScore = 0;
+        foreach($scores as $score) {
+            if ($tempMaxScore <= $score['score']) {
+                $tempMaxScore = $score['score'];
+            }
+        }
+
+        $count = 0;
+        foreach($scores as $score) {
+            if ($score['score'] == $tempMaxScore) {
+                $maxValues[$count] = $score;
+                $count++;
+            }
+        }
+
+        return $maxValues;
+
+    }
+
+    /**
+     * Method to return the weakest score from the scores array
+     * @param array $scores
+     * @return array
+     */
+    public function returnWeakest(Array $scores)
+    {
+        $minValues = [];
+        $tempMinScore = 999999999999999999999;
+        foreach($scores as $score) {
+            if ($tempMinScore >= $score['score']) {
+                $tempMinScore = $score['score'];
+            }
+        }
+
+        $count = 0;
+        foreach($scores as $score) {
+            if ($score['score'] == $tempMinScore) {
+                $minValues[$count] = $score;
+                $count++;
+            }
+        }
+
+        return $minValues;
+
+    }
 }
