@@ -43,8 +43,8 @@
                     echo '<tr>';
                     echo '<td>' . $assessment['identifier'] . '</td>';
                     echo '<td>' . $assessment['unit_id'] . '</td>';
-                    echo '<td><a href="/AssessmentDatabase/public/classmanagement/mark/' . $data['className'] . '/' . $assessment['identifier'] . '/">MarkIcon</a></td>';
-                    echo '<td><a href="/AssessmentDatabase/public/classmanagement/deleteAssessment/' . $data['className'] . '/' . $assessment['identifier'] . '/">DeleteIcon</a></td>';
+                    echo '<td><a href="/AssessmentDatabase/public/classmanagement/mark/' . $data['className'] . '/' . $assessment['identifier'] . '/"><span class="glyphicon glyphicon-edit"> </span></a></td>';
+                    echo '<td><a href="/AssessmentDatabase/public/classmanagement/deleteAssessment/' . $data['className'] . '/' . $assessment['identifier'] . '/"><span class="glyphicon glyphicon-remove"> </span></a></td>';
                     echo '</tr>';
                 }
             }

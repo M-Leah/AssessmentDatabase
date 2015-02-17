@@ -18,7 +18,7 @@
         <li>/</li>
         <li><a href="/AssessmentDatabase/public/ClassManagement/">Class Management</a></li>
         <li>/</li>
-        <li><a href="#">Report Management</a></li>
+        <li><a href="/AssessmentDatabase/public/ReportManagement/">Report Management</a></li>
         <li>/</li>
         <li></a> <a href="/AssessmentDatabase/public/home/logout/">Logout</a></li>
     </ul>
