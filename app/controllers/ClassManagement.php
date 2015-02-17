@@ -215,9 +215,9 @@ class ClassManagement extends Controller
                         // For each student insert into the model.
                         foreach ($strands as $strand) {
                             // Links students to the criteria they will be marked against.
-                            $model->createAssessmentGroup($student['student_name'], $unitID, $strand['strand_id'], $identifier, Session::get('username'));
+                            $model->createAssessmentGroup($student['student_name'], $unitID, $strand['strand_id'], $identifier, Session::get('username'), $className);
                         }
-                        $model->createUnitComments($student['student_name'], $unitID, $identifier, Session::get('username'));
+                        $model->createUnitComments($student['student_name'], $unitID, $identifier, Session::get('username'), $className);
                     }
                 }
 

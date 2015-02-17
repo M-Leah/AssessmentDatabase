@@ -92,7 +92,15 @@ class TeacherClass {
             $statement->bindParam(':teacher_name', $teacherName);
             if ($statement->execute())
             {
-                return true;
+                $statement = $db->prepare("DELETE FROM assessment WHERE class_name = :class_name AND teacher_name = :teacher_name;");
+                $statement->bindParam(':class_name', $className);
+                $statement->bindParam(':teacher_name', $teacherName);
+                if ($statement->execute())
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
 

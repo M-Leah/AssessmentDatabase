@@ -15,16 +15,17 @@ class Assessment
      * @param $identifier
      * @return bool
      */
-    public function createAssessmentGroup($studentName, $unitID, $strandID, $identifier, $teacherName)
+    public function createAssessmentGroup($studentName, $unitID, $strandID, $identifier, $teacherName, $className)
     {
         $db = Database::getInstance();
 
-        $statement = $db->prepare("INSERT INTO assessment (student_name, unit_id, strand_id, identifier, teacher_name) VALUES(:studentName, :unitID, :strandID, :identifier, :teacherName);");
+        $statement = $db->prepare("INSERT INTO assessment (student_name, unit_id, strand_id, identifier, teacher_name, class_name) VALUES(:studentName, :unitID, :strandID, :identifier, :teacherName, :className);");
         $statement->bindParam(':studentName', $studentName);
         $statement->bindParam(':unitID', $unitID);
         $statement->bindParam(':strandID', $strandID);
         $statement->bindParam(':identifier', $identifier);
         $statement->bindParam(':teacherName', $teacherName);
+        $statement->bindParam(':className', $className);
 
         if ($statement->execute()) {
 
@@ -34,15 +35,16 @@ class Assessment
         return false;
     }
 
-    public function createUnitComments($studentName, $unitID, $identifier, $teacherName)
+    public function createUnitComments($studentName, $unitID, $identifier, $teacherName, $className)
     {
         $db = Database::getInstance();
 
-        $statement = $db->prepare("INSERT INTO unitcomments (unit_id, student_name, teacher_name, identifier) VALUES (:unitID, :studentName, :teacherName, :identifier);");
+        $statement = $db->prepare("INSERT INTO unitcomments (unit_id, student_name, teacher_name, identifier, class_name) VALUES (:unitID, :studentName, :teacherName, :identifier, :className);");
         $statement->bindParam(':unitID', $unitID);
         $statement->bindParam(':studentName', $studentName);
         $statement->bindParam(':teacherName', $teacherName);
         $statement->bindParam(':identifier', $identifier);
+        $statement->bindParam(':className', $className);
 
         if ($statement->execute()) {
             return true;
