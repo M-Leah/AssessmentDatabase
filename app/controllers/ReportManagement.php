@@ -7,13 +7,48 @@
 
 class ReportManagement extends Controller
 {
-    public function index()
+    public function index($class = '')
     {
         Session::startSession();
         Session::handleLogin();
 
-        $classModel = $this->model('TeacherClass');
-        $classes = $classModel->getClasses(Session::get('username'));
+        if (isset($class) && !empty($class)) {
+
+            $identifiers = $this->model('Assessment')->getIdentifiersByTeacherAndClass(Session::get('username'), $class);
+
+
+            $convert = new Convert();
+            // Conditional Statement prevents error when Post Data is not submitted.
+            if ($selectedIdentifiers = $convert->reportPostToArray($_POST)) {
+                $details = $this->model('Assessment')->getAssessmentDetailsByIdentifierAndClass($selectedIdentifiers, $class);
+
+
+            }
+
+            $this->view('reportmanagement/report', [
+                'className' => htmlentities($class),
+                'identifiers' => $identifiers
+            ]);
+        }
+        else {
+            $classes = $this->model('TeacherClass')->getClasses(Session::get('username'));
+
+            $this->view('reportmanagement/index', [
+                'classes' => $classes
+            ]);
+        }
+    }
+
+    /* Below Code is not in use.
+    // Not in use at present
+    public function report()
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $classes = $this->model('TeacherClass')->getClasses(Session::get('username'));
+
+        $identifiers = $this->model('Assessment')->getIdentifiersByTeacher(Session::get('username'));
 
         if (isset($_POST['class']) && isset($_POST['report']) &&!empty($_POST['class']) && !empty($_POST['report'])) {
             switch($_POST['report']) {
@@ -38,8 +73,9 @@ class ReportManagement extends Controller
             }
         }
 
-        $this->view('reportmanagement/index', [
-            'classes' => $classes
+        $this->view('reportmanagement/report', [
+            'classes' => $classes,
+            'identifiers' => $identifiers
         ]);
     }
 
@@ -107,4 +143,6 @@ class ReportManagement extends Controller
             'weakestStudentsDetails' => $weakestStudentsArray
         ]);
     }
+
+    */
 }

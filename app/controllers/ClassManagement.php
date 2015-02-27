@@ -225,7 +225,7 @@ class ClassManagement extends Controller
             }
         }
 
-        $assessments = $model->getIdentifiersByTeacher(Session::get('username')) ? : $assessments = '';
+        $assessments = $model->getIdentifiersByTeacherAndClass(Session::get('username'), $className) ? : $assessments = '';
 
         $this->view('classmanagement/assess', [
             'className' => $className,

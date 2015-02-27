@@ -176,4 +176,21 @@ class Convert
         return $minValues;
 
     }
+
+    /**
+     * Method to return post data as an array.
+     * @param $postData
+     * @return array
+     */
+    public function reportPostToArray($postData)
+    {
+        $tempArray = [];
+
+        unset($postData['options']);
+        foreach($postData as $data) {
+            $tempArray[] = htmlentities($data);
+        }
+
+        return $tempArray;
+    }
 }

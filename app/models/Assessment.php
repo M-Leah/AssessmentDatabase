@@ -107,6 +107,24 @@ class Assessment
         return false;
     }
 
+    public function getIdentifiersByTeacherAndClass($teacherName,$className)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT DISTINCT(identifier), unit_id FROM assessment WHERE teacher_name = :teacherName AND class_name = :className;");
+        $statement->bindParam(':teacherName', $teacherName);
+        $statement->bindParam(':className', $className);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
     /**
      * Method to prevent duplicate identifiers being used in the database per teacher.
      * @param $teacherName
@@ -320,6 +338,36 @@ class Assessment
 
         return false;
 
+    }
+
+
+    /**
+     * Method to return Assessment Details by a variable Identifier amount
+     * @param array $identifiers
+     * @param $className
+     */
+    public function getAssessmentDetailsByIdentifierAndClass(Array $identifiers, $className)
+    {
+        $sql = "SELECT * FROM assessment
+                WHERE class_name = :className
+                AND identifier = :identifier";
+
+
+        $db = Database::getInstance();
+        $statement = $db->prepare($sql);
+
+        $statement->bindParam(':className', $className);
+        foreach($identifiers as $identifier) {
+            $statement->bindParam(':identifier', $identifier);
+            $statement->execute();
+            $data[$identifier] = $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+       if (sizeof($data) > 0) {
+           return $data;
+       }
+
+       return false;
     }
 
 }

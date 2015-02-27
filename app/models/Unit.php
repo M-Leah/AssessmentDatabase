@@ -59,6 +59,7 @@ class Unit
         return false;
     }
 
+
     /**
      * Method for inserting new units into the database
      * @param $unitName
