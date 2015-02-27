@@ -16,26 +16,23 @@
 
         <br><br>
 
-        <table class="table-bordered table-responsive">
+        <table border="1">
             <tr>
                 <td>Student Name</td>
-                <td>Overall Score</td>
+                <td>Overall Percentage</td>
                 <td>National Level</td>
             </tr>
-            <?php
-                $count = 0;
-                foreach ($data['scores'] as $score) {
-                    echo '<tr>';
-                    echo '<td>' . $score['student_name'] . '</td>';
-                    echo '<td>' . $score['score'] . '</td>';
-                    echo '<td>' . $data['levels'][$count]['level'] . '</td>';
-                    echo '</tr>';
-                    $count++;
-                }
+            <tr>
+            <?php foreach($data['levels'] as $level): ?>
+                <?php echo '<td>' . $level['student_name'] . '</td>'; ?>
+                <?php echo '<td>' . $level['percentage'] . '%</td>'; ?>
+                <?php echo '<td>' . $level['level'] . '</td>'; ?>
+                <?php echo '</tr>'; ?>
+            <?php endforeach; ?>
 
 
-            ?>
         </table>
+
 
         <br>
         <br>

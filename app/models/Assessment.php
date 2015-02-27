@@ -370,4 +370,35 @@ class Assessment
        return false;
     }
 
+    /**
+     * Method to return all unique criteria from a variable selected identifiers
+     * @param array $identifiers
+     * @param $className
+     * @return array|bool
+     */
+    public function getDistinctCriteriaByIdentifiers(Array $identifiers, $className)
+    {
+        $sql = "SELECT DISTINCT(strand_id)
+                FROM assessment
+                WHERE identifier = :identifier
+                AND class_name = :className;";
+
+        $criteriaArray = [];
+
+        $db = Database::getInstance();
+        $statement = $db->prepare($sql);
+        foreach($identifiers as $identifier) {
+            $statement->bindParam(':identifier', $identifier);
+            $statement->bindParam(':className', $className);
+            $statement->execute();
+            $criteriaArray[$identifier] = $statement->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        if (sizeof($criteriaArray) > 0) {
+            return $criteriaArray;
+        }
+
+        return false;
+    }
+
 }
