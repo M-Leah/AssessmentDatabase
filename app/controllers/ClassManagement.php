@@ -156,7 +156,7 @@ class ClassManagement extends Controller
 
 
         $this->view('classmanagement/edit', [
-            'message' => $message
+            'message' => $message,
         ]);
     }
 

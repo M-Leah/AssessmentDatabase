@@ -35,7 +35,7 @@
                 <label for="inputEmail">Email</label><br>
                 <input type="text" name="email" class="form-control">
             </div>
-            <input type="submit" class="btn btn-primary pull-right" value="Send Email">
+            <input type="submit" class="btn btn-default pull-right" value="Send Email">
         </form>
 
         Return to the <a href="/assessmentdatabase/public/login/">login</a> page.

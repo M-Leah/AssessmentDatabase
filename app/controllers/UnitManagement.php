@@ -130,8 +130,6 @@ class UnitManagement extends Controller
         }
 
 
-        $this->view('unitmanagement/addstrand', []);
-
     }
 
     public function deleteStrand($paramOne = '', $paramTwo = '')
@@ -149,8 +147,6 @@ class UnitManagement extends Controller
             die();
         }
 
-
-        $this->view('unitmanagement/removestrand', []);
 
     }
 

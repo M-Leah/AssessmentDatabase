@@ -81,7 +81,8 @@ class ReportManagement extends Controller
 
 
         $this->view('reportmanagement/levels', [
-            'levels' => $levels
+            'levels' => $levels,
+            'class' => $class
         ]);
     }
 

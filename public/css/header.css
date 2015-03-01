@@ -7,10 +7,11 @@ body {
     padding: 10px;
 }
 
+
 .main_title {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-align: center;
-    background-color: cadetblue;
+    background-color: #231f20;
     color: #ffffff;
     font-weight: bold;
     margin: 0;
@@ -19,7 +20,7 @@ body {
 }
 
 .form_title {
-    color: cadetblue;
+    color: #231f20;
     font-weight: bold;
     border-bottom: solid 1px lightgray;
     margin-bottom: 5px;
