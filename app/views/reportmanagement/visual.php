@@ -32,7 +32,7 @@
         </div>
         <div id="navbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Logged in as: <?php echo htmlentities(Session::get('username')); ?></a></li>
+                <li><a href="#">Logged in as: <?php echo htmlentities(Session::get('username')) ?></a></li>
             </ul>
 
         </div>
@@ -54,44 +54,77 @@
             <div class="text-center center-block">
                 <!-- Replace Content From here -->
 
-                <h1 class="page-header">Report Management (<?php echo $data['className'] ?>)</h1>
+                <h1 class="page-header">Visual Reports</h1>
+
+
                 <div class="center-block text-center">
 
-                    <br><br>
+<?php
 
-                    <h3 style="color: darkred"><?= $data['error']; ?></h3>
 
-                    <?php if (is_array($data['identifiers'])): ?>
+    // Loop for each student
+    foreach($data['studentNames'] as $student) {
 
-                    Select the Units to Include in the Report:
-                    <form action="" method="post">
-                        <?php $count = 0; ?>
-                        <?php foreach($data['identifiers'] as $identifier): ?>
-                            <?php echo '<input type="checkbox" name="' . $count . '" value="'. $identifier['identifier'] . '"> ' . $identifier['identifier']; ?>
-                            <?php $count++; ?>
-                        <?php endforeach; ?>
-                        <br><br>
-                        <select name="options" class="form-control center-block text-center" style="width:400px">
-                            <option value="0">Convert Scores to National Levels</option>
-                            <option value="1">Visual Assessment Report</option>
-                            <option value="2">Strongest and Weakest Units</option>
-                            <option value="3">Strongest and Weakest Pupils</option>
-                        </select>
-                        <br><br>
-                        <input type="submit" class="btn btn-default" value="Generate Report">
-                    </form>
-                <?php endif; ?>
+        echo '<table border="1" width="90%">';
+        echo '<tr>';
+        echo '<td>Student Name</td>';
+        echo '</tr>';
+        echo '<tr>';
+        echo '<td>' . $student . '</td>';
+        echo '</tr>';
+        echo '</table>';
+
+        echo '<table border="1" width="80%">';
+
+        echo '<tr>';
+        echo '<td>Unit Name</td>';
+        echo '<td>Teacher Name</td>';
+        echo '</tr>';
+        echo '<tr>';
+        echo '<td>' . $data['unitDetails'][0]['unit_name'] . '</td>';
+        echo '<td>' . $data['unitDetails'][0]['teacher_name'] . '</td>';
+        echo '</tr>';
+        echo '</table>';
+
+        echo '<table border="1" width="80%">';
+        echo '<tr>';
+        echo '<td>Strand Code</td>';
+        echo '<td>Traffic Light Awarded</td>';
+        echo '<td>Teacher Comment</td>';
+        echo '</tr>';
+
+
+
+        foreach($data['detailsArray'] as $detail) {
+            foreach($detail as $content) {
+
+                if ($student == $content['student_name']) {
+                    echo '<tr>';
+                    echo '<td>' . $content['strand_id'] . '</td>';
+                    echo '<td>' . $content['trafficlight'] . '</td>';
+                    echo '<td>' . $content['comment'] . '</td>';
+                    echo '</tr>';
+                }
+
+            }
+        }
+
+        echo '</table>';
+        echo '<br>';
+        echo '<hr>';
+
+    }
+
+?>
+
+
+            <a href="<?php echo '/AssessmentDatabase/public/ReportManagement/' . $data['class']; ?>">&larr; Back</a>
+
+                    <!-- Content Replacement ends here -->
                 </div>
-
-                <br><br>
-                <a href="/AssessmentDatabase/public/ReportManagement/">&larr; Back</a>
-
-
-                <!-- Content Replacement ends here -->
             </div>
         </div>
     </div>
-</div>
 </div>
 
 <!-- Bootstrap core JavaScript
@@ -99,7 +132,6 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/AssessmenDatabase/public/js/bootstrap/bootstrap.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 </body>
 </html>
+

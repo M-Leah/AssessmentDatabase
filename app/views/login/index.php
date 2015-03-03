@@ -47,7 +47,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1 class="main_title">Assessment Database</h1>
-        <p>Teacher's passion is teaching, not administrative work. However there is an ever increasing requirement for teachers to spent countless hours sat working through spreadsheets to monitor student progress. This web application is a tool to help ease the process and save teachers time so they can focus on their passion: Teaching.</p>
+        <p>Teacher's passion is teaching, not administrative work. However there is an ever increasing requirement for teachers to spend countless hours sat working through spreadsheets to monitor student progress. This web application is a tool to help ease the process and save teachers time so they can focus on their passion: Teaching.</p>
     </div>
 </div>
 

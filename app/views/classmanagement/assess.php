@@ -66,16 +66,16 @@
                     <br><br>
 
                     <form action="" method="POST">
-                        Assessment Identifier: <input type="text" name="identifier">
-                        <select name="unit">
+                        <input type="text" class="form-control center-block" style="width: 250px" name="identifier" placeholder="Enter a unique identifier..."> <br>
+                        <select name="unit" class="form-control center-block" style="width: 400px" >
                             <?php foreach ($data['units'] as $unit) {
                                 echo '<option value=' . $unit['unit_id'] . '>' .$unit['unit_name'] . '</option>';
                             } ?>
-                        </select><br><br>
+                        </select><br>
                         <input type="submit" class="btn btn-default" value="Create Assessment">
                     </form>
 
-                    <br>
+                    <br><br>
                     <?php if (is_array($data['assessments'])) { ?>
                     <table class="table-bordered table-responsive">
                         <tr>

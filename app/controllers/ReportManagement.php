@@ -14,6 +14,7 @@ class ReportManagement extends Controller
 
         if (isset($class) && !empty($class)) {
 
+            $error = '';
             $identifiers = $this->model('Assessment')->getIdentifiersByTeacherAndClass(Session::get('username'), $class);
 
 
@@ -23,6 +24,10 @@ class ReportManagement extends Controller
                 $details = $this->model('Assessment')->getAssessmentDetailsByIdentifierAndClass($selectedIdentifiers, $class);
                 $distinctCriteria = $this->model('Assessment')->getDistinctCriteriaByIdentifiers($selectedIdentifiers, $class);
 
+                $count = 0;
+                foreach($selectedIdentifiers as $identifiers) {
+                    $count++;
+                }
 
                 // Store the require variables in a session so it is accessible across the various reports.
                 Session::set('details', $details);
@@ -31,10 +36,18 @@ class ReportManagement extends Controller
                 switch($_POST['options']) {
                     case 0:
                         header('Location: /AssessmentDatabase/public/ReportManagement/Levels/' . $class);
+                        die();
                         break;
                     case 1:
-                        echo 'Not functional yet';
-                        break;
+                        if ($count > 1) {
+                            $error = 'You may only select one identifier for a Visual Report';
+                            break;
+                        }
+                        else {
+                            header('Location: /AssessmentDatabase/public/ReportManagement/VisualAssessment/' . $class);
+                            die();
+                            break;
+                        }
                     case 2:
                         echo 'Not functional yet';
                         break;
@@ -50,7 +63,8 @@ class ReportManagement extends Controller
 
             $this->view('reportmanagement/report', [
                 'className' => htmlentities($class),
-                'identifiers' => $identifiers
+                'identifiers' => $identifiers,
+                'error' => $error
             ]);
         }
         else {
@@ -82,6 +96,44 @@ class ReportManagement extends Controller
 
         $this->view('reportmanagement/levels', [
             'levels' => $levels,
+            'class' => $class
+        ]);
+    }
+
+    public function visualAssessment($class = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $details = Session::get('details');
+
+        // Get UnitName from the Details
+        foreach($details as $identifier) {
+            foreach($identifier as $array) {
+                $unitDetails = $this->model('Unit')->getUnitNameByID($array['unit_id']);
+                break 2;
+            }
+        }
+
+        // Get Names Array from the Details
+        $temp = [];
+        foreach($details as $identifier) {
+            foreach($identifier as $array) {
+                $temp[] = $array['student_name'];
+            }
+        }
+
+        // Remap the Keys
+        $temp = array_unique($temp);
+        $studentNames = [];
+        foreach ($temp as $student) {
+            $studentNames[] = $student;
+        }
+
+        $this->view('reportmanagement/visual', [
+            'detailsArray' => $details,
+            'unitDetails' => $unitDetails,
+            'studentNames' => $studentNames,
             'class' => $class
         ]);
     }

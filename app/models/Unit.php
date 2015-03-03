@@ -308,6 +308,28 @@ class Unit
         return false;
     }
 
+    /**
+     * Method to convert a Unit ID into its respective Unit Name
+     * @param $unitID
+     * @return array|bool
+     */
+    public function getUnitNameByID($unitID)
+    {
+        $db = Database::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM unit WHERE unit_id = :unitID;");
+        $statement->bindParam('unitID', $unitID);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if (sizeof($result) > 0) {
+            return $result;
+        }
+
+        return false;
+    }
+
 
 
 
