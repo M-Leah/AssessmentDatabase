@@ -49,10 +49,11 @@ class ReportManagement extends Controller
                             break;
                         }
                     case 2:
-                        echo 'Not functional yet';
+
                         break;
                     case 3:
-                        echo 'Not functional yet';
+                        header('Location: /AssessmentDatabase/public/ReportManagement/StudentStrength/' . $class);
+                        die();
                         break;
                     default:
                         $error = 'No Report option Selected';
@@ -134,6 +135,41 @@ class ReportManagement extends Controller
             'detailsArray' => $details,
             'unitDetails' => $unitDetails,
             'studentNames' => $studentNames,
+            'class' => $class
+        ]);
+    }
+
+
+    public function studentStrength($class = '')
+    {
+        Session::startSession();
+        Session::handleLogin();
+
+        $details = Session::get('details');
+        $criteria = Session::get('criteria');
+
+        $convert = new Convert();
+        $students = $this->model('TeacherClass')->getStudents($class, Session::get('username'));
+
+        $numeric = $convert->toNumericValue($details, $students);
+        $strongest = $convert->returnStrongest($numeric);
+        $weakest = $convert->returnWeakest($numeric);
+
+        // Get assessment details for the strongst student(s)
+        foreach($strongest as $student) {
+            $strongestDetails[] = $this->model('Assessment')->getStudentAssessmentDetailsByNameAndClass($student['student_name'], Session::get('username'), $class);
+        }
+
+        // Get assessment details for the weakest student(s)
+        foreach($weakest as $student) {
+            $weakestDetails[] = $this->model('Assessment')->getStudentAssessmentDetailsByNameAndClass($student['student_name'], Session::get('username'), $class);
+        }
+
+        $this->view('reportmanagement/studentstrength', [
+            'strongest' => $strongest,
+            'strongestDetails' => $strongestDetails,
+            'weakest' => $weakest,
+            'weakestDetails' => $weakestDetails,
             'class' => $class
         ]);
     }
