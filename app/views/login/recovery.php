@@ -9,9 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../../../public/css/header.css">
-    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../../public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/header.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap-theme.min.css">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
             <input type="submit" class="btn btn-default pull-right" value="Send Email">
         </form>
 
-        Return to the <a href="/assessmentdatabase/public/login/">login</a> page.
+        Return to the <a href="/AssessmentDatabase/public/login/">login</a> page.
 
     </div>
 

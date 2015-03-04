@@ -91,12 +91,18 @@ class Unit
     {
         $db = Database::getInstance();
 
-        $statement = $db->prepare("DELETE FROM unit WHERE unit_id = :unitID AND teacher_name = :teacherName;");
+        $statement = $db->prepare("DELETE FROM unitcomments WHERE unit_id = :unitID AND teacher_name = :teacherName;");
         $statement->bindParam(':unitID', $unitID);
         $statement->bindParam(':teacherName', $teacherName);
-
         if ($statement->execute()) {
-            return true;
+
+            $statement = $db->prepare("DELETE FROM unit WHERE unit_id = :unitID AND teacher_name = :teacherName;");
+            $statement->bindParam(':unitID', $unitID);
+            $statement->bindParam(':teacherName', $teacherName);
+
+            if ($statement->execute()) {
+                return true;
+            }
         }
 
         return false;

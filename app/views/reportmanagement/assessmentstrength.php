@@ -54,37 +54,78 @@
             <div class="text-center center-block">
                 <!-- Replace Content From here -->
 
-                <h1 class="page-header">Report Management (<?php echo $data['className'] ?>)</h1>
-                <div class="center-block text-center">
-
-                    <br><br>
-
-                    <h3 style="color: darkred"><?= $data['error']; ?></h3>
-
-                    <?php if (is_array($data['identifiers'])): ?>
-
-                    Select the Units to Include in the Report:
-                    <form action="" method="post">
-                        <?php $count = 0; ?>
-                        <?php foreach($data['identifiers'] as $identifier): ?>
-                            <?php echo '<input type="checkbox" name="' . $count . '" value="'. $identifier['identifier'] . '"> ' . $identifier['identifier']; ?>
-                            <?php $count++; ?>
-                        <?php endforeach; ?>
-                        <br><br>
-                        <select name="options" class="form-control center-block text-center" style="width:400px">
-                            <option value="0">Convert Scores to National Levels</option>
-                            <option value="1">Visual Assessment Report</option>
-                            <option value="2">Strongest and Weakest Assessment</option>
-                            <option value="3">Strongest and Weakest Pupils</option>
-                        </select>
-                        <br><br>
-                        <input type="submit" class="btn btn-default" value="Generate Report">
-                    </form>
-                <?php endif; ?>
-                </div>
+                <h1 class="page-header">Assessment Strength</h1>
 
                 <br><br>
-                <a href="/AssessmentDatabase/public/ReportManagement/">&larr; Back</a>
+
+
+                <h3>Strongest Assessment</h3>
+                <table border="1" width="75%">
+                    <tr>
+                        <td>Identifier</td>
+                        <td>Percentage Score</td>
+                    </tr>
+                    <tr>
+                <?php foreach($data['strongestAssessment'] as $assessment): ?>
+                <?php echo '<td>' . $assessment . '</td>'; ?>
+                <?php endforeach; ?>
+                </table>
+
+                <br><br>
+
+                <h3>Strongest Assessment Breakdown</h3>
+                <table border="1" width="75%">
+                    <tr>
+                        <td>Student Name</td>
+                        <td>Strand ID</td>
+                        <td>Traffic Light</td>
+                        <td>Comment</td>
+                    </tr>
+                    <tr>
+                        <?php foreach($data['strongestDetails'] as $assessment): ?>
+                            <?php echo '<td>' . $assessment['student_name'] . '</td>'; ?>
+                            <?php echo '<td>' . $assessment['strand_id'] . '</td>'; ?>
+                            <?php echo '<td>' . $assessment['trafficlight'] . '</td>'; ?>
+                            <?php echo '<td>' . $assessment['comment'] . '</td>'; ?>
+                            <?php echo '</tr>'; ?>
+
+                        <?php endforeach; ?>
+                </table>
+
+                <br>
+                <hr>
+                <br>
+
+                <h3>Weakest Assessment</h3>
+                <table border="1" width="75%">
+                    <tr>
+                        <td>Identifier</td>
+                        <td>Percentage Score</td>
+                    </tr>
+                    <tr>
+                        <?php foreach($data['weakestAssessment'] as $assessment): ?>
+                            <?php echo '<td>' . $assessment . '</td>'; ?>
+                        <?php endforeach; ?>
+                </table>
+
+                <h3>Weakest Assessment Breakdown</h3>
+                <table border="1" width="75%">
+                    <tr>
+                        <td>Student Name</td>
+                        <td>Strand ID</td>
+                        <td>Traffic Light</td>
+                        <td>Comment</td>
+                    </tr>
+                    <tr>
+                        <?php foreach($data['weakestDetails'] as $assessment): ?>
+                            <?php echo '<td>' . $assessment['student_name'] . '</td>'; ?>
+                            <?php echo '<td>' . $assessment['strand_id'] . '</td>'; ?>
+                            <?php echo '<td>' . $assessment['trafficlight'] . '</td>'; ?>
+                            <?php echo '<td>' . $assessment['comment'] . '</td>'; ?>
+                            <?php echo '</tr>'; ?>
+
+                        <?php endforeach; ?>
+                </table>
 
 
                 <!-- Content Replacement ends here -->

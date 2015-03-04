@@ -9,9 +9,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../../../public/css/header.css">
-    <link rel="stylesheet" href="../../../public/css/bootstrap_css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../../public/css/bootstrap_css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/header.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap.min.css">
+    <link rel="stylesheet" href="/AssessmentDatabase/public/css/bootstrap_css/bootstrap-theme.min.css">
 </head>
 <body>
 
@@ -34,11 +34,11 @@
         </div>
         <div class="form-group">
             <label for="inputPassword">New Password</label><br>
-            <input type="text" name="password" class="form-control">
+            <input type="password" name="password" class="form-control">
         </div>
         <div class="form-group">
             <label for="inputConfirm">Confirm New Password</label><br>
-            <input type="text" name="confirm_password" class="form-control">
+            <input type="password" name="confirm_password" class="form-control">
         </div>
         <div class="form-group">
             <label for="inputHash">Hash</label><br>
@@ -47,7 +47,7 @@
         <input type="submit" class="btn btn-primary pull-right" value="Submit Changes">
     </form>
 
-    Return to the <a href="/assessmentdatabase/public/login/">login</a> page.
+    Return to the <a href="/AssessmentDatabase/public/login/">login</a> page.
 
 </div>
 

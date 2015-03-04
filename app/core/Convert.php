@@ -75,6 +75,112 @@ class Convert
         return $scoresArray;
     }
 
+    // Return assessment group scores
+    public function toAssessmentGroupScoresByStrand($assessmentDetails)
+    {
+        // Loop for each identifier
+        // Check what Unit ID it is
+        // If it is a unique Unit ID
+        // Work out the Maximum score, and the score achieved
+        // Work out the percentage.
+
+        $scoresArray = [];
+        $count = 0;
+
+        // Loop for each identifier
+        foreach($assessmentDetails as $identifier) {
+            // Loop for each assessment within the identifier
+            foreach($identifier as $content) {
+
+                switch($content['trafficlight']) {
+                    case 'Red':
+                        if (empty($scoresArray[$content['identifier']][$count][$content['strand_id']])) {
+                            $scoresArray[$content['identifier']][$count][$content['strand_id']] = 0;
+                        }
+
+                        $scoresArray[$content['identifier']][$count][$content['strand_id']] = ($scoresArray[$content['identifier']][$count][$content['strand_id']] + 1);
+                        break;
+                    case 'Amber':
+                        if (empty($scoresArray[$content['identifier']][$count][$content['strand_id']])) {
+                            $scoresArray[$content['identifier']][$count][$content['strand_id']] = 0;
+                        }
+
+                        $scoresArray[$content['identifier']][$count][$content['strand_id']] = ($scoresArray[$content['identifier']][$count][$content['strand_id']] + 2);
+                        break;
+                    case 'Green':
+                        if (empty($scoresArray[$content['identifier']][$count][$content['strand_id']])) {
+                            $scoresArray[$content['identifier']][$count][$content['strand_id']] = 0;
+                        }
+                        $scoresArray[$content['identifier']][$count][$content['strand_id']] = ($scoresArray[$content['identifier']][$count][$content['strand_id']] + 3);
+                        break;
+                    default:
+                        break;
+
+                    $count++;
+                }
+
+            }
+        }
+
+        return $scoresArray;
+
+    }
+
+
+    /**
+     * Method to return the total score
+     * @param $assessmentDetails
+     * @return array
+     */
+    public function toAssessmentGroupScoresTotal($assessmentDetails)
+    {
+
+        $scoresArray = $this->toAssessmentGroupScoresByStrand($assessmentDetails);
+        $count = 0;
+        $arrayTemp = [];
+
+
+        $arrayKeys = array_keys($scoresArray);
+
+
+        $count = 0;
+        foreach($scoresArray as $identifier) {
+
+            foreach($identifier as $array) {
+
+                $arrayTemp[$arrayKeys[$count]] = array_sum($array);
+
+            }
+            $count++;
+        }
+
+        // Return the scores array.
+        return $arrayTemp;
+
+    }
+
+
+    /**
+     * Method to return the maximum possible score from all strands
+     * @param $assessmentDetails
+     * @return array
+     */
+    public function getMaximumAssessmentGroupScores($assessmentDetails)
+    {
+        $maxScores = [];
+        $score = 0;
+        foreach($assessmentDetails as $identifier) {
+            foreach($identifier as $content) {
+                $score += 3;
+                $maxScores[$content['identifier']] = $score;
+            }
+            $score = 0;
+        }
+
+        return $maxScores;
+    }
+
+
     /**
      * Take in the distinct criteria in each unit and calculate the max possible score
      * @param $criteria
@@ -82,8 +188,6 @@ class Convert
      */
     public function toMaximumScore($criteria)
     {
-        //echo '<pre>', print_r($criteria) ,'</pre>';
-
         $count = 0;
 
         // Loop for each identifier
@@ -101,6 +205,58 @@ class Convert
         return $maxScore;
 
     }
+
+    public function scoresToPercentage($totalScore, $maxScore)
+    {
+        $keys = array_keys($totalScore);
+        $newArray = [];
+
+        $count = 0;
+        foreach ($keys as $key) {
+            $newArray[$count] = ['identifier' => $key, 'percentage' => round(($totalScore[$key] / $maxScore[$key]) * 100)];
+            $count++;
+        }
+
+        // Return the percentage array.
+        return $newArray;
+
+    }
+
+    /**
+     * Method to return the strongest unit
+     * @param $percentageArray
+     * @return array
+     */
+    public function getStrongestUnit($percentageArray)
+    {
+        // Find the highest score in the array
+        $maxScore = 0;
+        foreach($percentageArray as $percentage) {
+            if ($percentage['percentage'] >= $maxScore) {
+                $maxScore = $percentage['percentage'];
+                $array = ['identifier' => $percentage['identifier'], 'percentage' => $percentage['percentage']];
+            }
+        }
+
+        // return the strongest unit(s)
+        return $array;
+    }
+
+    public function getWeakestUnit($percentageArray)
+    {
+        // Find the weakest score in the array
+        $minScore = 1000;
+        foreach($percentageArray as $percentage) {
+            if ($percentage['percentage'] <= $minScore) {
+                $minScore = $percentage['percentage'];
+                $array = ['identifier' => $percentage['identifier'], 'percentage' => $percentage['percentage']];
+            }
+        }
+
+        // return the weakest unit(s)
+        return $array;
+    }
+
 
 
     /**

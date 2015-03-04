@@ -49,7 +49,8 @@ class ReportManagement extends Controller
                             break;
                         }
                     case 2:
-
+                        header('Location: /AssessmentDatabase/public/ReportManagement/AssessmentStrength/' . $class);
+                        die();
                         break;
                     case 3:
                         header('Location: /AssessmentDatabase/public/ReportManagement/StudentStrength/' . $class);
@@ -171,6 +172,40 @@ class ReportManagement extends Controller
             'weakest' => $weakest,
             'weakestDetails' => $weakestDetails,
             'class' => $class
+        ]);
+    }
+
+    public function assessmentStrength($class = '')
+    {
+
+        Session::startSession();
+        Session::handleLogin();
+
+        // Store a list of chosen strands for later use
+        $strands = Session::get('criteria');
+
+        // Store the Assessment details for the chosen strands
+        $assessmentDetails = Session::get('details');
+
+        $convert = new Convert();
+
+        $maxScore = $convert->getMaximumAssessmentGroupScores($assessmentDetails);
+        $assessmentScoresTotal = $convert->toAssessmentGroupScoresTotal($assessmentDetails);
+        $percentageScores = $convert->scoresToPercentage($assessmentScoresTotal, $maxScore);
+
+        // Get the Weakest and Strongest Unit from Percentage Scores
+        $strongestAssessment = $convert->getStrongestUnit($percentageScores);
+        $weakestAssessment = $convert->getWeakestUnit($percentageScores);
+
+        $strongestDetails = $this->model('Assessment')->getAssessmentGroupDetails(Session::get('username'), $strongestAssessment['identifier']);
+        $weakestDetails = $this->model('Assessment')->getAssessmentGroupDetails(Session::get('username'), $weakestAssessment['identifier']);
+
+        $this->view('reportmanagement/assessmentstrength', [
+            'percentageScores' => $percentageScores,
+            'strongestAssessment' => $strongestAssessment,
+            'strongestDetails' => $strongestDetails,
+            'weakestAssessment' => $weakestAssessment,
+            'weakestDetails' => $weakestDetails
         ]);
     }
 

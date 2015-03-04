@@ -38,6 +38,7 @@
                     <input type="password" placeholder="Password" class="form-control" name="password">
                 </div>
                 <button type="submit" class="btn btn-default">Sign in</button>
+                <h5 class="label-warning"><?= $data['error']; ?></h5>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
