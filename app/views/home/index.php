@@ -58,7 +58,9 @@
 
             <a href="/AssessmentDatabase/public/files/students.csv">Download the Excel Template</a>
 
-            <p>>> Userguide to come <<</p>
+            <br>
+
+            <a href="/AssessmentDatabase/public/files/Userguide.pdf">Download the User Guide</a>
 
         </div>
     </div>

@@ -179,12 +179,21 @@ class ReportManagement extends Controller
             $weakestDetails[] = $this->model('Assessment')->getStudentAssessmentDetailsByNameAndClass($student['student_name'], Session::get('username'), $class);
         }
 
+        // Get Student National Levels
+        $convert = new Convert();
+        $students = $this->model('TeacherClass')->getStudents($class, Session::get('username'));
+        $numeric = $convert->toNumericValue($details, $students);
+        $maximumScore = $convert->toMaximumScore($criteria);
+        $percentage = $convert->numericToPercentage($numeric, $maximumScore);
+        $levels = $convert->toLevel($percentage);
+
         $this->view('reportmanagement/studentstrength', [
             'strongest' => $strongest,
             'strongestDetails' => $strongestDetails,
             'weakest' => $weakest,
             'weakestDetails' => $weakestDetails,
-            'class' => $class
+            'class' => $class,
+            'levels' => $levels
         ]);
     }
 

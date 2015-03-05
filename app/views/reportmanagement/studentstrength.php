@@ -60,15 +60,20 @@
                 <table border="1" width="75%">
                     <tr>
                         <td>Student Name</td>
-                        <td>Numeric Score</td>
+                        <td>National Level</td>
                     </tr>
                     <tr>
                     <?php foreach($data['strongest'] as $student): ?>
                         <?php echo '<td>' . $student['student_name'] . '</td>'; ?>
-                        <?php echo '<td>'. $student['score'] . '</td>'; ?>
+                            <?php foreach($data['levels'] as $level): ?>
+                                <?php if($level['student_name'] == $student['student_name']): ?>
+                                    <?php echo '<td>'. $level['level'] . '</td>'; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         <?php echo '</tr>'; ?>
                     <?php endforeach; ?>
                 </table>
+
 
                 <br><br>
 
@@ -99,12 +104,16 @@
                 <table border="1" width="75%">
                     <tr>
                         <td>Student Name</td>
-                        <td>Numeric Score</td>
+                        <td>National Level</td>
                     </tr>
                     <tr>
                         <?php foreach($data['weakest'] as $student): ?>
                             <?php echo '<td>' . $student['student_name'] . '</td>'; ?>
-                            <?php echo '<td>'. $student['score'] . '</td>'; ?>
+                            <?php foreach($data['levels'] as $level): ?>
+                                <?php if($level['student_name'] == $student['student_name']): ?>
+                                    <?php echo '<td>'. $level['level'] . '</td>'; ?>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                             <?php echo '</tr>'; ?>
                         <?php endforeach; ?>
                 </table>
