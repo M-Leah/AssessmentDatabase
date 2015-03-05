@@ -108,10 +108,12 @@ class ReportManagement extends Controller
         Session::handleLogin();
 
         $details = Session::get('details');
+        $criteria = Session::get('criteria');
 
-        // Get UnitName from the Details
+        // Get UnitName and Overall Unit comment from the Details
         foreach($details as $identifier) {
             foreach($identifier as $array) {
+                $overall = $this->model('Assessment')->getStudentOverallComments(Session::get('username'), $array['identifier']);
                 $unitDetails = $this->model('Unit')->getUnitNameByID($array['unit_id']);
                 break 2;
             }
@@ -132,11 +134,22 @@ class ReportManagement extends Controller
             $studentNames[] = $student;
         }
 
+        // Get National Level
+        $convert = new Convert();
+        $students = $this->model('TeacherClass')->getStudents($class, Session::get('username'));
+
+        $numeric = $convert->toNumericValue($details, $students);
+        $maximumScore = $convert->toMaximumScore($criteria);
+        $percentage = $convert->numericToPercentage($numeric, $maximumScore);
+        $levels = $convert->toLevel($percentage);
+
         $this->view('reportmanagement/visual', [
             'detailsArray' => $details,
             'unitDetails' => $unitDetails,
             'studentNames' => $studentNames,
-            'class' => $class
+            'class' => $class,
+            'overall' => $overall,
+            'levels' => $levels
         ]);
     }
 
@@ -156,7 +169,7 @@ class ReportManagement extends Controller
         $strongest = $convert->returnStrongest($numeric);
         $weakest = $convert->returnWeakest($numeric);
 
-        // Get assessment details for the strongst student(s)
+        // Get assessment details for the strongest student(s)
         foreach($strongest as $student) {
             $strongestDetails[] = $this->model('Assessment')->getStudentAssessmentDetailsByNameAndClass($student['student_name'], Session::get('username'), $class);
         }

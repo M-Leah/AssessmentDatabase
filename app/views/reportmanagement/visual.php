@@ -61,7 +61,7 @@
 
 <?php
 
-
+    $count = 0;
     // Loop for each student
     foreach($data['studentNames'] as $student) {
 
@@ -79,10 +79,12 @@
         echo '<tr>';
         echo '<td>Unit Name</td>';
         echo '<td>Teacher Name</td>';
+        echo '<td>National Level</td>';
         echo '</tr>';
         echo '<tr>';
         echo '<td>' . $data['unitDetails'][0]['unit_name'] . '</td>';
         echo '<td>' . $data['unitDetails'][0]['teacher_name'] . '</td>';
+        echo '<td>' . $data['levels'][$count]['level'] . '</td>';
         echo '</tr>';
         echo '</table>';
 
@@ -110,9 +112,17 @@
         }
 
         echo '</table>';
-        echo '<br>';
-        echo '<hr>';
 
+        echo '<table border="1" width="80%">';
+        echo '<tr>';
+        echo '<td>Overall Comment</td>';
+        echo '</tr>';
+        echo '<tr>';
+        echo '<td>' . $data['overall'][$count]['comment'] . '</td>';
+        echo '</tr>';
+        echo '</table>';
+        echo '<br><hr>';
+        $count++;
     }
 
 ?>
